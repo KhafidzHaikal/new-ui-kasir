@@ -58,15 +58,18 @@
                             </div>
                         </div>
                     </div>
-                    <button onclick="addBackup('{{ route('produk.backup_data') }}')" class="btn btn-warning btn-flat"><i
-                            class="fa fa-plus-circle"></i> Backup Produk</button>
-                    {{-- <form action={{ route('produk.backup_data') }} method="POST" class="btn" style="margin-left: -10px">
-                        @csrf
-                        <button type="submit" class="btn btn-warning btn-flat {{ $buttonClass }}"{{ $buttonAttributes }}
-                            onclick="return confirm('Anda yakin Backup Data {{ date('F Y') }}?')">
-                            <i class="fa fa-plus-circle"></i> Backup Produk {{ date('F Y') }}
-                        </button>
-                    </form> --}}
+                    {{-- <button onclick="addBackup('{{ route('produk.backup_data') }}')" class="btn btn-warning btn-flat"><i
+                            class="fa fa-plus-circle"></i> Backup Produk</button> --}}
+                    @if (auth()->user()->level == 6)
+                    @else
+                                <form action={{ route('produk.backup_data') }} method="POST" class="btn" style="margin-left: -10px">
+                                    @csrf
+                                    <button type="submit" class="btn btn-warning btn-flat {{ $buttonClass }}"{{ $buttonAttributes }}
+                                        onclick="return confirm('Anda yakin Backup Data {{ date('F Y') }}?')">
+                                        <i class="fa fa-plus-circle"></i> Backup Produk {{ date('F Y') }}
+                                    </button>
+                                </form>
+                    @endif
                 </div>
                 <div class="box-body table-responsive">
                     {{-- <table width="100%">
@@ -173,7 +176,7 @@
                     },
                 ],
                 columnDefs: [{
-                    targets: 4, 
+                    targets: 4,
                     visible: {{ auth()->user()->level != 4 && auth()->user()->level != 5 ? 'true' : 'false' }}
                 }]
             });

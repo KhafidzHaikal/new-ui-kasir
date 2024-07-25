@@ -65,10 +65,10 @@ class DashboardController extends Controller
             $tanggal_awal = date('Y-m-d', strtotime("+1 day", strtotime($tanggal_awal)));
         }
 
-        // if (auth()->user()->level == 1 || auth()->user()->level == 3 || auth()->user()->level == 4 || auth()->user()->level == 5) {
-        return view('admin.dashboard', compact('kategori', 'produk', 'supplier', 'member', 'tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan'));
-        // } else {
-        //     return view('kasir.dashboard');
-        // }
+        if (auth()->user()->level == 6) {
+            return view('kasir.dashboard');
+        } else {
+            return view('admin.dashboard', compact('kategori', 'produk', 'supplier', 'member', 'tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan'));
+        }
     }
 }

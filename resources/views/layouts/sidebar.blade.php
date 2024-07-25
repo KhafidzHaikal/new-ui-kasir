@@ -38,6 +38,35 @@
                         <i class="fa fa-truck"></i> <span>Supplier</span>
                     </a>
                 </li>
+            @elseif (auth()->user()->level == 6)
+                <li class="header">MASTER</li>
+                <li>
+                    <a href="{{ route('produk.index') }}">
+                        <i class="fa fa-cubes"></i> <span>Produk</span>
+                    </a>
+                </li>
+                <li class="header">TRANSAKSI</li>
+                <li>
+                    <a href="{{ route('pengeluaran.index') }}">
+                        <i class="fa fa-money"></i> <span>Pengeluaran</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('penjualan.index') }}">
+                        <i class="fa fa-upload"></i> <span>Penjualan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('transaksi.baru') }}">
+                        <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Baru</span>
+                    </a>
+                </li>
+                <li class="header">REPORT</li>
+                <li>
+                    <a href="{{ route('laporan.kasir') }}">
+                        <i class="fa fa-file-pdf-o"></i> <span>Laporan Kasir</span>
+                    </a>
+                </li>
             @else
                 <li class="header">MASTER</li>
                 <li>

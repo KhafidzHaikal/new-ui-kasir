@@ -32,8 +32,19 @@ class PenjualanController extends Controller
                 ->where('users.level', 5)
                 ->orderBy('id_penjualan', 'desc')
                 ->get();
-        } else {
+        } elseif (auth()->user()->level == 1) {
             $penjualan = Penjualan::with('member')->orderBy('id_penjualan', 'desc')->get();
+        } elseif (auth()->user()->level == 2) {
+            $penjualan = Penjualan::with('member')
+                ->join('users', 'id_user', '=', 'users.id')
+                ->where('users.level', 2)
+                ->orderBy('id_penjualan', 'desc')
+                ->get();
+        } else {
+            $penjualan = Penjualan::with('member')
+                ->where('id_user', auth()->user()->id)
+                ->orderBy('id_penjualan', 'desc')
+                ->get();
         }
 
         return datatables()

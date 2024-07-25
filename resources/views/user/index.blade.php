@@ -63,9 +63,15 @@
                             if (data == 1) {
                                 return 'Admin';
                             } else if (data == 2){
-                                return 'Kasir';
-                            } else {
+                                return 'Admin Waserda';
+                            } else if (data == 3){
                                 return 'Gudang';
+                            } else if (data == 4){
+                                return 'Bengkel';
+                            } else if (data == 5){
+                                return 'Fotocopy';
+                            } else {
+                                return 'Kasir';
                             }
                         }
                     },

@@ -31,14 +31,14 @@
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
-                        {{-- <li class="user-header">
+                        <li class="user-header">
                             <img src="{{ url(auth()->user()->foto ?? '') }}" class="img-circle img-profil"
                                 alt="User Image">
-                            </li> --}}
+                                <p>
+                                    {{ auth()->user()->name }} - {{ auth()->user()->email }}
+                                </p>
+                            </li>
 
-                            <p>
-                                {{ auth()->user()->name }} - {{ auth()->user()->email }}
-                            </p>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">

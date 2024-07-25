@@ -43,28 +43,33 @@ Route::group(['middleware' => 'auth'], function () {
     // 3 Gudang
     // 4 Bengkel
     // 5 Fotocopy
+    // 6 Kasir
 
-    Route::group(['middleware' => 'level:1,2,3,4,5'], function () {
-        Route::get('/kategori/data', [KategoriController::class, 'data'])->name('kategori.data');
-        Route::resource('/kategori', KategoriController::class);
-
-        Route::get('/produk/data', [ProdukController::class, 'data'])->name('produk.data');
-        Route::post('/produk/delete-selected', [ProdukController::class, 'deleteSelected'])->name('produk.delete_selected');
-        Route::post('/produk/cetak-barcode', [ProdukController::class, 'cetakBarcode'])->name('produk.cetak_barcode');
-        Route::get('/produk/stok/{awal}/{akhir}', [ProdukController::class, 'pdf'])->name('produk.pdf');
-        Route::post('/produk/backup', [BackupProdukController::class, 'store'])->name('produk.backup_data');
-        Route::resource('/produk', ProdukController::class);
-
+    Route::group(['middleware' => 'level:1,2,4,5,6'], function () {
         Route::get('/member/data', [MemberController::class, 'data'])->name('member.data');
         Route::post('/member/cetak-member', [MemberController::class, 'cetakMember'])->name('member.cetak_member');
         Route::resource('/member', MemberController::class);
 
-        Route::get('/supplier/data', [SupplierController::class, 'data'])->name('supplier.data');
-        Route::get('/supplier/pdf', [SupplierController::class, 'pdf'])->name('supplier.pdf');
-        Route::resource('/supplier', SupplierController::class);
-
         Route::get('/pengeluaran/data', [PengeluaranController::class, 'data'])->name('pengeluaran.data');
         Route::resource('/pengeluaran', PengeluaranController::class);
+
+        Route::get('/penjualan/data', [PenjualanController::class, 'data'])->name('penjualan.data');
+        Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
+        Route::get('/penjualan/{id}', [PenjualanController::class, 'show'])->name('penjualan.show');
+        Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
+        Route::get('/penjualan/pdf/{awal}/{akhir}', [PenjualanController::class, 'pdf'])->name('penjualan.pdf');
+
+    });
+    Route::group(['middleware' => 'level:1,4'], function () {
+        Route::get('/jasa/data', [JasaController::class, 'data'])->name('jasa.data');
+        Route::resource('/jasa', JasaController::class);
+        Route::get('/jasa/{jasa}/{awal}/{akhir}', [JasaController::class, 'pdf'])->name('jasa.pdf');
+        Route::get('/transaksi-jasa/{id}', [JasaController::class, 'nota'])->name('transaksi.jasa');
+    });
+
+    Route::group(['middleware' => 'level:1,2,3,4,5'], function () {
+        Route::get('/kategori/data', [KategoriController::class, 'data'])->name('kategori.data');
+        Route::resource('/kategori', KategoriController::class);
 
         Route::get('/pembelian/data', [PembelianController::class, 'data'])->name('pembelian.data');
 
@@ -83,19 +88,21 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/pembelian_detail/search', [PembelianDetailController::class, 'search'])->name('search-pembelian');
 
-        Route::get('/penjualan/data', [PenjualanController::class, 'data'])->name('penjualan.data');
-        Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
-        Route::get('/penjualan/{id}', [PenjualanController::class, 'show'])->name('penjualan.show');
-        Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
-        Route::get('/penjualan/pdf/{awal}/{akhir}', [PenjualanController::class, 'pdf'])->name('penjualan.pdf');
-
-        Route::get('/jasa/data', [JasaController::class, 'data'])->name('jasa.data');
-        Route::resource('/jasa', JasaController::class);
-        Route::get('/jasa/{jasa}/{awal}/{akhir}', [JasaController::class, 'pdf'])->name('jasa.pdf');
-        Route::get('/transaksi-jasa/{id}', [JasaController::class, 'nota'])->name('transaksi.jasa');
+        Route::get('/supplier/data', [SupplierController::class, 'data'])->name('supplier.data');
+        Route::get('/supplier/pdf', [SupplierController::class, 'pdf'])->name('supplier.pdf');
+        Route::resource('/supplier', SupplierController::class);
     });
 
-    Route::group(['middleware' => 'level:1,2,4,5'], function () {
+    Route::group(['middleware' => 'level:1,2,3,4,5,6'], function () {
+        Route::get('/produk/data', [ProdukController::class, 'data'])->name('produk.data');
+        Route::post('/produk/delete-selected', [ProdukController::class, 'deleteSelected'])->name('produk.delete_selected');
+        Route::post('/produk/cetak-barcode', [ProdukController::class, 'cetakBarcode'])->name('produk.cetak_barcode');
+        Route::get('/produk/stok/{awal}/{akhir}', [ProdukController::class, 'pdf'])->name('produk.pdf');
+        Route::resource('/produk', ProdukController::class);
+    });
+
+    Route::group(['middleware' => 'level:1,2,4,5,6'], function () {
+
         Route::get('/transaksi/baru', [PenjualanController::class, 'create'])->name('transaksi.baru');
         Route::post('/transaksi/simpan', [PenjualanController::class, 'store'])->name('transaksi.simpan');
         Route::get('/transaksi/selesai', [PenjualanController::class, 'selesai'])->name('transaksi.selesai');
@@ -117,6 +124,8 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::group(['middleware' => 'level:1,2,4,5'], function () {
+        Route::post('/produk/backup', [BackupProdukController::class, 'store'])->name('produk.backup_data');
+
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
         Route::get('/laporan/data/{awal}/{akhir}', [LaporanController::class, 'data'])->name('laporan.data');
         Route::get('/laporan/pdf/{awal}/{akhir}', [LaporanController::class, 'exportPDF'])->name('laporan.export_pdf');
