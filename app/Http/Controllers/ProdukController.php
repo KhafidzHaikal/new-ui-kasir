@@ -36,7 +36,29 @@ class ProdukController extends Controller
 
         // Data disabled jika sudah backup tiap bulan
         $now = Carbon::now();
-        $backups = BackupProduk::select('created_at')->get();
+        if(auth()->user()->level == 4) {
+            $backups = DB::table('backup_produks')
+            ->join('produk', 'backup_produks.id_produk', '=', 'produk.id_produk')
+            ->where('backup_produks.id_kategori', 4)
+            ->select('backup_produks.created_at')
+            ->get();
+        } elseif (auth()->user()->level == 5) {
+            $backups = DB::table('backup_produks')
+            ->join('produk', 'backup_produks.id_produk', '=', 'produk.id_produk')
+            ->where('backup_produks.id_kategori', 5)
+            ->select('backup_produks.created_at')
+            ->get();
+        } elseif (auth()->user()->level == 1) {
+            $backups = DB::table('backup_produks')
+            ->select('created_at')
+            ->get();
+        } else {
+            $backups = DB::table('backup_produks')
+            ->join('produk', 'backup_produks.id_produk', '=', 'produk.id_produk')
+            ->where([['backup_produks.id_kategori', '!=', 4], ['backup_produks.id_kategori', '!=', 5]])
+            ->select('backup_produks.created_at')
+            ->get();
+        }
 
         foreach ($backups as $backup) {
             $backupDate = Carbon::parse($backup->created_at);
@@ -92,59 +114,64 @@ class ProdukController extends Controller
             Alert::error('Stok Produk', "Halo, " . $stok_kosong->count() . " Produk stok produk habis. Harap pastikan untuk mengelola stok produk Anda.");
         }
 
-        return view('produk.index', compact('kategori', 'buttonAttributes', 'buttonClass'));
+        $produk = DB::table('produk')->where('id_kategori', 4)->get();
+
+        return view('produk.index', compact('kategori', 'buttonAttributes', 'buttonClass', 'produk'));
     }
 
     public function data(Request $request)
     {
         if (auth()->user()->level == 4) {
-            $produk = Produk::where('id_kategori', 4)->get();
+            $produk = DB::table('produk')->where('id_kategori', 4)->latest();
         } elseif (auth()->user()->level == 5) {
-            $produk = Produk::where('id_kategori', 5)->get();
+            $produk = DB::table('produk')->where('id_kategori', 5)->latest();
         } elseif (auth()->user()->level == 1) {
             $produk = Produk::latest();
         } else {
-            $produk = Produk::where([['id_kategori', '!=', 4], ['id_kategori', '!=', 5]]);
+            $produk = Produk::where([['id_kategori', '!=', 4], ['id_kategori', '!=', 5]])->latest();
         }
 
         return datatables()
             ->of($produk)
             ->addIndexColumn()
-            ->addColumn('select_all', function ($produk) {
-                return '
-                    <input type="checkbox" name="id_produk[]" value="' . $produk->id_produk . '">
-                ';
+            ->addColumn('select_all', function ($data) {
+                return '<input type="checkbox" name="id_produk[]" value="' . $data->id_produk . '">';
             })
-            ->addColumn('kode_produk', function ($produk) {
-                return '<span class="label label-success">' . $produk->kode_produk . '</span>';
+            ->addColumn('kode_produk', function ($data) {
+                return '<span class="label label-success">' . $data->kode_produk . '</span>';
             })
-            ->addColumn('tanggal_expire', function ($produk) {
-                $expired_products = Produk::where('tanggal_expire', '<=', Carbon::now()->addDays(7))
-                    ->whereNotNull('tanggal_expire')
-                    ->get();
+            ->addColumn('tanggal_expire', function ($data) {
+                if (auth()->user()->level != 4 || auth()->user()->level != 5) {
+                    $expired_products = Produk::where('tanggal_expire', '<=', Carbon::now()->addDays(7))
+                        ->whereNotNull('tanggal_expire')
+                        ->pluck('tanggal_expire')
+                        ->toArray();
 
-                if (in_array($produk->tanggal_expire, $expired_products->pluck('tanggal_expire')->toArray())) {
-                    return '<span class="label label-danger">' . $produk->tanggal_expire . '</span>';
+                    if (in_array($data->tanggal_expire, $expired_products)) {
+                        return '<span class="label label-danger">' . $data->tanggal_expire . '</span>';
+                    } else {
+                        return '<span class="label label-success">' . $data->tanggal_expire . '</span>';
+                    }
                 } else {
-                    return '<span class="label label-success">' . $produk->tanggal_expire . '</span>';;
-                };
+                    return ''; // or return a blank string or a message indicating no value available
+                }
             })
-            ->addColumn('harga_beli', function ($produk) {
-                return format_uang($produk->harga_beli);
+            ->addColumn('harga_beli', function ($data) {
+                return format_uang($data->harga_beli);
             })
-            ->addColumn('harga_jual', function ($produk) {
-                return format_uang($produk->harga_jual);
+            ->addColumn('harga_jual', function ($data) {
+                return format_uang($data->harga_jual);
             })
-            ->addColumn('stok', function ($produk) {
-                return format_uang($produk->stok);
+            ->addColumn('stok', function ($data) {
+                return format_uang($data->stok);
             })
-            ->addColumn('aksi', function ($produk) {
+            ->addColumn('aksi', function ($data) {
                 return '
-                <div class="btn-group">
-                    <button type="button" onclick="editForm(`' . route('produk.update', $produk->id_produk) . '`)" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i></button>
-                    <button type="button" onclick="deleteData(`' . route('produk.destroy', $produk->id_produk) . '`)" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></button>
-                </div>
-                ';
+            <div class="btn-group">
+                <button type="button" onclick="editForm(`' . route('produk.update', $data->id_produk) . '`)" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i></button>
+                <button type="button" onclick="deleteData(`' . route('produk.destroy', $data->id_produk) . '`)" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+            </div>
+        ';
             })
             ->rawColumns(['aksi', 'kode_produk', 'tanggal_expire', 'select_all'])
             ->make(true);
@@ -270,6 +297,8 @@ class ProdukController extends Controller
     {
         $akhir = Carbon::parse($akhir)->endOfDay();
         if (auth()->user()->level == 4) {
+            // $produk = Produk::where('id_kategori', 4)->update(['created_at' => now()]);
+            // dd($produk);
             $produk = Produk::leftJoin('pembelian_detail', 'pembelian_detail.id_produk', '=', 'produk.id_produk')
                 ->leftJoin('penjualan_detail', 'penjualan_detail.id_produk', '=', 'produk.id_produk')
                 ->leftJoin('penjualan', 'penjualan_detail.id_penjualan', '=', 'penjualan.id_penjualan')

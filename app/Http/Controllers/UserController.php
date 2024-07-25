@@ -20,8 +20,10 @@ class UserController extends Controller
             $user = User::where('level', 4)->orderBy('id', 'desc')->get();
         } elseif (auth()->user()->level == 5) {
             $user = User::where('level', 5)->orderBy('id', 'desc')->get();
-        } else {
+        } elseif (auth()->user()->level == 1) {
             $user = User::orderBy('id', 'desc')->get();
+        } else {
+            $user = User::whereBetween('level', [2,3])->orderBy('id', 'desc')->get();
         }
 
         return datatables()

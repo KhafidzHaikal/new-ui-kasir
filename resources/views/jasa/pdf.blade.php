@@ -85,7 +85,7 @@
                 </tr>
             @endforeach
             <tr>
-                <td colspan="3"><strong>Total Pengeluaran</strong></td>
+                <td colspan="3"><strong>Total Jasa</strong></td>
                 <td style="text-align: right"><strong>{{ format_uang($jumlah) }}</strong></td>
             </tr>
         </tbody>

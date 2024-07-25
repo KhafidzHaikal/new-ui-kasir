@@ -91,7 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/jasa/data', [JasaController::class, 'data'])->name('jasa.data');
         Route::resource('/jasa', JasaController::class);
-        Route::get('/jasa/{awal}/{akhir}', [JasaController::class, 'pdf'])->name('jasa.pdf');
+        Route::get('/jasa/{jasa}/{awal}/{akhir}', [JasaController::class, 'pdf'])->name('jasa.pdf');
         Route::get('/transaksi-jasa/{id}', [JasaController::class, 'nota'])->name('transaksi.jasa');
     });
 

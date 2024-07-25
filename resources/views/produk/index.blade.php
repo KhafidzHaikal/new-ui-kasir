@@ -69,6 +69,25 @@
                     </form> --}}
                 </div>
                 <div class="box-body table-responsive">
+                    {{-- <table width="100%">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kode Produk</th>
+                                <th>Nama Produk</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($produk as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->kode_produk }}</td>
+                                    <td>{{ $item->nama_produk }}</td>
+                                </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table> --}}
                     <form action="" method="post" class="form-produk">
                         @csrf
                         <table class="table table-stiped table-bordered">
@@ -79,7 +98,6 @@
                                 <th width="5%">No</th>
                                 <th>Kode</th>
                                 <th>Nama</th>
-                                <th>Kategori</th>
                                 <th>Tanggal Kadaluarsa</th>
                                 <th>Satuan</th>
                                 <th>Harga Beli</th>
@@ -153,7 +171,11 @@
                         searchable: false,
                         sortable: false
                     },
-                ]
+                ],
+                columnDefs: [{
+                    targets: 4, 
+                    visible: {{ auth()->user()->level != 4 && auth()->user()->level != 5 ? 'true' : 'false' }}
+                }]
             });
 
             $('#modal-form').validator().on('submit', function(e) {

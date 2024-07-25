@@ -18,10 +18,6 @@ class DashboardController extends Controller
     {
         $kategori = Kategori::count();
 
-        $expired_products = Produk::where('tanggal_expire', '<=', Carbon::now()->addDays(7))
-            ->whereNotNull('tanggal_expire')
-            ->get();
-
         if (auth()->user()->level == 4) {
             $produk = Produk::where('id_kategori', 4)->count();
         } elseif (auth()->user()->level == 5) {
@@ -29,10 +25,17 @@ class DashboardController extends Controller
         } elseif (auth()->user()->level == 1) {
             $produk = Produk::count();
 
+            $expired_products = Produk::where([['tanggal_expire', '<=', Carbon::now()->addDays(7)], ['id_kategori', '!=', 4], ['id_kategori', '!=', 5]])
+                ->whereNotNull('tanggal_expire')
+                ->get();
+
             if ($expired_products->isNotEmpty()) {
                 Alert::warning('Produk Kadaluarsa', "Halo, " . $expired_products->count() . " Produk yang habis masa berlaku dalam 7 hari ke depan. Harap pastikan untuk mengelola stok produk Anda.");
             }
         } else {
+            $expired_products = Produk::where([['tanggal_expire', '<=', Carbon::now()->addDays(7)], ['id_kategori', '!=', 4], ['id_kategori', '!=', 5]])
+                ->whereNotNull('tanggal_expire')
+                ->get();
             $produk = Produk::where([['id_kategori', '!=', 4], ['id_kategori', '!=', 5]])->count();
 
             if ($expired_products->isNotEmpty()) {

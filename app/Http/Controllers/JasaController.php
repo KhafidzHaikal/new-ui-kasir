@@ -136,24 +136,41 @@ class JasaController extends Controller
         return response(null, 204);
     }
 
-    public function pdf($awal, $akhir)
+    public function pdf($text, $awal, $akhir)
     {
         $akhir = Carbon::parse($akhir)->endOfDay();
-
-        if (auth()->user()->level == 4) {
-            $jasas = DB::table('jasas')
-                ->join('users', 'jasas.id_user', '=', 'users.id')
-                ->where('users.level', 4)
-                ->whereBetween('jasas.created_at', [$awal, $akhir])
-                ->get();
-        } elseif (auth()->user()->level == 5) {
-            $jasas = DB::table('jasas')
-                ->join('users', 'jasas.id_user', '=', 'users.id')
-                ->where('users.level', 5)
-                ->whereBetween('jasas.created_at', [$awal, $akhir])
-                ->get();
+        if($text == 'cuci'){
+            if (auth()->user()->level == 4) {
+                $jasas = DB::table('jasas')
+                    ->join('users', 'jasas.id_user', '=', 'users.id')
+                    ->where([['users.level', 4], ['jasas.deskripsi', 'Jasa Cuci']])
+                    ->whereBetween('jasas.created_at', [$awal, $akhir])
+                    ->get();
+            } elseif (auth()->user()->level == 5) {
+                $jasas = DB::table('jasas')
+                    ->join('users', 'jasas.id_user', '=', 'users.id')
+                    ->where([['users.level', 5], ['jasas.deskripsi', 'Jasa Cuci']])
+                    ->whereBetween('jasas.created_at', [$awal, $akhir])
+                    ->get();
+            } else {
+                $jasas = Jasa::whereBetween('created_at', [$awal, $akhir])->get();
+            }
         } else {
-            $jasas = Jasa::whereBetween('created_at', [$awal, $akhir])->get();
+            if (auth()->user()->level == 4) {
+                $jasas = DB::table('jasas')
+                    ->join('users', 'jasas.id_user', '=', 'users.id')
+                    ->where([['users.level', 4], ['jasas.deskripsi', 'Jasa Service']])
+                    ->whereBetween('jasas.created_at', [$awal, $akhir])
+                    ->get();
+            } elseif (auth()->user()->level == 5) {
+                $jasas = DB::table('jasas')
+                    ->join('users', 'jasas.id_user', '=', 'users.id')
+                    ->where([['users.level', 5], ['jasas.deskripsi', 'Jasa Service']])
+                    ->whereBetween('jasas.created_at', [$awal, $akhir])
+                    ->get();
+            } else {
+                $jasas = Jasa::whereBetween('created_at', [$awal, $akhir])->get();
+            }
         }
 
 

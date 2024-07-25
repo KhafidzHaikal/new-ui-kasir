@@ -29,9 +29,21 @@
                                 <div class="modal-body">
                                     <div class="modal-body">
                                         <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Jasa</label>
+                                            <div class="col-sm-5">
+                                                <select id="jasa" class="form-control" required>
+                                                    <option value="">Pilih Tipe</option>
+                                                    <option value="cuci">Jasa Cuci</option>
+                                                    <option value="service">Jasa Service</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Tanggal Awal</label>
                                             <div class="col-sm-5">
-                                                <input type="date" class="form-control" id="awal" required>
+                                                <input type="date" class="form-control" id="tanggal_awal" required>
                                             </div>
                                         </div>
                                     </div>
@@ -39,8 +51,8 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label">Tanggal Akhir</label>
                                             <div class="col-sm-5">
-                                                <input type="date" class="form-control" id="akhir" required
-                                                    value="{{ request('awal') ?? date('Y-m-d') }}">
+                                                <input type="date" class="form-control" id="tanggal_akhir" required
+                                                    value="{{ request('tanggal_awal') ?? date('Y-m-d') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -48,7 +60,7 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     <a target="_blank"
-                                        onclick="this.href='/jasa/'+document.getElementById('awal').value+ '/' +document.getElementById('akhir').value"
+                                        onclick="this.href='/jasa/'+document.getElementById('jasa').value+ '/' +document.getElementById('tanggal_awal').value+ '/' +document.getElementById('tanggal_akhir').value"
                                         class="btn btn-primary">Cetak</a>
                                 </div>
                             </div>

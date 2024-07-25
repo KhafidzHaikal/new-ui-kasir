@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href={{ route('dashboard') }} class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         @php
             $words = explode(' ', $setting->nama_perusahaan);
@@ -25,20 +25,20 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ url(auth()->user()->foto ?? '') }}" class="user-image img-profil"
-                            alt="User Image">
-                        <span class="hidden-xs">{{ auth()->user()->name }}</span>
+                        {{-- <img src="{{ url(auth()->user()->foto ?? '') }}" class="user-image img-profil"
+                            alt="User Image"> --}}
+                        <span>{{ auth()->user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
-                        <li class="user-header">
+                        {{-- <li class="user-header">
                             <img src="{{ url(auth()->user()->foto ?? '') }}" class="img-circle img-profil"
                                 alt="User Image">
+                            </li> --}}
 
                             <p>
                                 {{ auth()->user()->name }} - {{ auth()->user()->email }}
                             </p>
-                        </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
