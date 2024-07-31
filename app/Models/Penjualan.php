@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+Use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Penjualan extends Model
@@ -12,6 +13,13 @@ class Penjualan extends Model
     protected $table = 'penjualan';
     protected $primaryKey = 'id_penjualan';
     protected $guarded = [];
+
+    protected function pembayaran(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => ["tunai", "kredit"][$value]
+        );
+    }
 
     public function member()
     {

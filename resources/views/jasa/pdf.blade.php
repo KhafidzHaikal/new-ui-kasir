@@ -56,7 +56,7 @@
 </head>
 
 <body onload="window.print()">
-    <h3 class="text-center">Laporan Pengeluaran</h3>
+    <h3 class="text-center">Laporan {{ $title }}</h3>
     <h4 class="text-center">
         Tanggal {{ tanggal_indonesia($awal, false) }}
         s/d

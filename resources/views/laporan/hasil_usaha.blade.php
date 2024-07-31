@@ -75,6 +75,9 @@
                 <th width="5%">No</th>
                 <th width="15%">Tanggal</th>
                 <th>Penjualan</th>
+                @if (auth()->user()->level == 1 || auth()->user()->level == 4)
+                    <th>Jasa</th>
+                @endif
                 <th>HPP</th>
                 <th>Hasil Usaha</th>
             </tr>
@@ -84,8 +87,15 @@
                 <td>1</td>
                 <td>{{ tanggal_indonesia($akhir, false) }}</td>
                 <td>{{ format_uang($penjualan) }}</td>
+                @if (auth()->user()->level == 1 || auth()->user()->level == 4)
+                    <td>{{ format_uang($jasa) }}</td>
+                @endif
                 <td>{{ format_uang($hpp) }}</td>
-                <td>{{ format_uang($penjualan - $hpp) }}</td>
+                @if (auth()->user()->level == 1 || auth()->user()->level == 4)
+                    <td>{{ format_uang($penjualan + $jasa - $hpp) }}</td>
+                @else
+                    <td>{{ format_uang($penjualan - $hpp) }}</td>
+                @endif
             </tr>
         </tbody>
     </table>

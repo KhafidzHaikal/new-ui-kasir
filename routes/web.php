@@ -57,7 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
         Route::get('/penjualan/{id}', [PenjualanController::class, 'show'])->name('penjualan.show');
         Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
-        Route::get('/penjualan/pdf/{awal}/{akhir}', [PenjualanController::class, 'pdf'])->name('penjualan.pdf');
+        Route::get('/penjualan/{pembayaran}/{awal}/{akhir}', [PenjualanController::class, 'pdf'])->name('penjualan.pdf');
 
     });
     Route::group(['middleware' => 'level:1,4'], function () {
@@ -139,7 +139,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/user/data', [UserController::class, 'data'])->name('user.data');
         Route::resource('/user', UserController::class);
 
-        Route::get('/pengeluaran/{awal}/{akhir}', [PengeluaranController::class, 'pdf'])->name('pengeluaran.pdf');
+        Route::get('/pengeluaran/{jenis}/{awal}/{akhir}', [PengeluaranController::class, 'pdf'])->name('pengeluaran.pdf');
         Route::get('/export-anggota-kpri', [MemberController::class, 'pdf'])->name('member.pdf');
 
         Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');

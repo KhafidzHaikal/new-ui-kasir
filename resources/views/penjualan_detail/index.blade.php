@@ -101,7 +101,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="kode_member" class="col-lg-2 control-label">Member</label>
+                                    <label for="kode_member" class="col-lg-2 control-label">Anggota</label>
                                     <div class="col-lg-8">
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="kode_member"
@@ -124,6 +124,37 @@
                                     <label for="bayar" class="col-lg-2 control-label">Bayar</label>
                                     <div class="col-lg-8">
                                         <input type="text" id="bayarrp" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="pembayaran" class="col-lg-2 control-label">Pembayaran</label>
+                                    <div class="col-lg-8">
+                                        <select name="pembayaran" id="pembayaran" class="form-control" required>
+                                            <option value="">Pilih Pembayaran</option>
+                                            <option value="0">Tunai</option>
+                                            <option value="1">Kredit</option>
+                                        </select>
+                                        <span class="help-block with-errors"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row cicilan-group">
+                                    <label for="cicilan" class="col-lg-2 control-label">Kredit Cicilan</label>
+                                    <div class="col-lg-8">
+                                        <select name="cicilan" id="cicilan" class="form-control" required>
+                                            <option value="">Pilih Kredit Cicilan</option>
+                                            <option value="2">x 2 Bulan</option>
+                                            <option value="3">x 3 Bulan</option>
+                                            <option value="4">x 4 Bulan</option>
+                                            <option value="5">x 5 Bulan</option>
+                                            <option value="6">x 6 Bulan</option>
+                                            <option value="8">x 8 Bulan</option>
+                                            <option value="9">x 9 Bulan</option>
+                                            <option value="10">x 10 Bulan</option>
+                                            <option value="11">x 11 Bulan</option>
+                                            <option value="12">x 12 Bulan</option>
+                                            <option value="24">x 24 Bulan</option>
+                                        </select>
+                                        <span class="help-block with-errors"></span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -159,7 +190,23 @@
 
 @push('scripts')
     <script>
-        let table, table2;
+        let table, table2, table3;
+
+        $('#pembayaran').on('change', function() {
+            var pembayaranValue = $(this).val();
+            if (pembayaranValue == 1) {
+                $('.cicilan-group').show();
+            } else {
+                $('.cicilan-group').hide();
+            }
+        });
+
+        // Initialize the visibility of .cicilan-group based on the initial value of #pembayaran
+        if ($('#pembayaran').val() == 1) {
+            $('.cicilan-group').show();
+        } else {
+            $('.cicilan-group').hide();
+        }
 
         $(document).ready(function() {
             $('#search-form').submit(function(event) {
@@ -234,7 +281,7 @@
                         $('#diterima').trigger('input');
                     }, 300);
                 });
-            table2 = $('.table-produk').DataTable();
+            table2 = $('.table-produk').DataTable();            
 
             $(document).on('input', '.quantity', function() {
                 let self = this;
@@ -331,6 +378,7 @@
 
         function tampilMember() {
             $('#modal-member').modal('show');
+            table3 = $('.table-member').DataTable();
         }
 
         function pilihMember(id, kode) {

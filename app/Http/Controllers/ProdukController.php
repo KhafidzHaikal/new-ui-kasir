@@ -321,7 +321,7 @@ class ProdukController extends Controller
                     'users.name'
                 )
                 ->where('produk.id_kategori', 4)
-                ->whereBetween('produk.created_at', [$awal, $akhir])
+                ->whereBetween('produk.updated_at', [$awal, $akhir])
                 ->groupBy('produk.id_produk')
                 ->get();
         } elseif (auth()->user()->level == 5) {
@@ -347,7 +347,7 @@ class ProdukController extends Controller
                     'users.name'
                 )
                 ->where('produk.id_kategori', 5)
-                ->whereBetween('produk.created_at', [$awal, $akhir])
+                ->whereBetween('produk.updated_at', [$awal, $akhir])
                 ->groupBy('produk.id_produk')
                 ->get();
         } elseif (auth()->user()->level == 1) {
@@ -372,7 +372,7 @@ class ProdukController extends Controller
                     DB::raw("(SELECT SUM(penjualan_detail.jumlah) FROM penjualan_detail penjualan_detail WHERE penjualan_detail.id_produk = produk.id_produk) as total_jumlah"),
                     'users.name'
                 )
-                ->whereBetween('produk.created_at', [$awal, $akhir])
+                ->whereBetween('produk.updated_at', [$awal, $akhir])
                 ->groupBy('produk.id_produk')
                 ->get();
         } else {
@@ -398,7 +398,7 @@ class ProdukController extends Controller
                     'users.name'
                 )
                 ->where([['produk.id_kategori', '!=', 4], ['produk.id_kategori', '!=', 5]])
-                ->whereBetween('produk.created_at', [$awal, $akhir])
+                ->whereBetween('produk.updated_at', [$awal, $akhir])
                 ->groupBy('produk.id_produk')
                 ->get();
         }

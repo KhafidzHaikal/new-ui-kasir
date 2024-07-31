@@ -32,7 +32,7 @@
             font-weight: 400;
             color: #000000;
             text-align: center;
-            
+
         }
 
         td,
@@ -68,27 +68,50 @@
             <tr>
                 <th width="5%">No</th>
                 <th width="10%">Tanggal</th>
+                <th width="10%">Pembayaran</th>
                 <th width="10%">Nama Kasir</th>
-                <th>Nama Barang</th>
-                <th width="5%">Jumlah</th>
-                <th width="15%">Harga Satuan</th>
-                <th>Total</th>
+                <th width="10%">Tunai</th>
+                <th width="10%">Kredit</th>
+                <th width="20%">Total</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($penjualan as $row)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ tanggal_indonesia($row->created_at, false) }}</td>
-                    <td>{{ $row->user->name }}</td>
-                    <td style="text-align: left">{{ $row->produk->nama_produk }}</td>
-                    <td>{{ $row->jumlah }}</td>
-                    <td style="text-align: right">{{ format_uang($row->harga_jual) }}</td>
-                    <td style="text-align: right">{{ format_uang($row->subtotal) }}</td>
-                </tr>
+                @if ($row->total_item != 0)
+                    <tr>
+                        <td>{{ $no++ }}</td>
+                        <td>{{ tanggal_indonesia($row->created_at, false) }}</td>
+                        @if ($row->pembayaran == 'tunai')
+                            <td style="color: #059212; font-weight:700; text-transform:capitalize">
+                                Tunai</td>
+                        @else
+                            <td style="color: #C80036; font-weight:700; text-transform:capitalize">
+                                Kredit</td>
+                        @endif
+                        <td>{{ $row->user->name }}</td>
+                        @if ($row->pembayaran == 'tunai')
+                            <td style="text-align: right">
+                                {{ format_uang($row->bayar) }}</td>
+                        @else
+                            <td style="text-align: right">
+                                0</td>
+                        @endif
+                        @if ($row->pembayaran == 'kredit')
+                            <td style="text-align: right">
+                                {{ format_uang($row->bayar) }}</td>
+                        @else
+                            <td style="text-align: right">
+                                0</td>
+                        @endif
+                        <td style="text-align: right">{{ format_uang($row->bayar) }}</td>
+                    </tr>
+                @else
+                @endif
             @endforeach
             <tr>
-                <td colspan="6"><strong>Total Penjualan</strong></td>
+                <td colspan="4"><strong>Total Penjualan</strong></td>
+                <td style="text-align: right"><strong>{{ format_uang($total_tunai) }}</strong></td>
+                <td style="text-align: right"><strong>{{ format_uang($total_kredit) }}</strong></td>
                 <td style="text-align: right"><strong>{{ format_uang($total) }}</strong></td>
             </tr>
         </tbody>

@@ -21,6 +21,8 @@ class BuatPenjualanTable extends Migration
             $table->tinyInteger('diskon')->default(0);
             $table->integer('bayar')->default(0);
             $table->integer('diterima')->default(0);
+            $table->tinyInteger('pembayaran')->default(0);
+            $table->integer('cicilan')->default(0);
             $table->foreignId('id_user')->onDelete('cascade');
             $table->timestamps();
         });

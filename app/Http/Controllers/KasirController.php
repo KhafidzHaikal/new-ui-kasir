@@ -22,83 +22,74 @@ class KasirController extends Controller
     {
         if (auth()->user()->level == 1) {
             $penjualan = Penjualan::with('member')->orderBy('id_penjualan', 'desc')->get();
-
-            return datatables()
-                ->of($penjualan)
-                ->addIndexColumn()
-                ->addColumn('total_item', function ($penjualan) {
-                    return format_uang($penjualan->total_item);
-                })
-                ->addColumn('total_harga', function ($penjualan) {
-                    return 'Rp. ' . format_uang($penjualan->total_harga);
-                })
-                ->addColumn('bayar', function ($penjualan) {
-                    return 'Rp. ' . format_uang($penjualan->bayar);
-                })
-                ->addColumn('tanggal', function ($penjualan) {
-                    return tanggal_indonesia($penjualan->created_at, false);
-                })
-                ->addColumn('kode_member', function ($penjualan) {
-                    $member = $penjualan->member->kode_member ?? '';
-                    return '<span class="label label-success">' . $member . '</spa>';
-                })
-                ->editColumn('diskon', function ($penjualan) {
-                    return $penjualan->diskon . '%';
-                })
-                ->editColumn('kasir', function ($penjualan) {
-                    return $penjualan->user->name ?? '';
-                })
-                ->addColumn('aksi', function ($penjualan) {
-                    return '
-                <div class="btn-group">
-                    <button onclick="showDetail(`' . route('penjualan.show', $penjualan->id_penjualan) . '`)" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></button>
-                    <button onclick="deleteData(`' . route('penjualan.destroy', $penjualan->id_penjualan) . '`)" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></button>
-                </div>
-                ';
-                })
-                ->rawColumns(['aksi', 'kode_member'])
-                ->make(true);
+        } elseif (auth()->user()->level == 2) {
+            $penjualan = Penjualan::with('member')
+                ->join('users', 'penjualan.id_user', '=', 'users.id')
+                ->where('users.level', 2)
+                ->orWhere('users.level', 6)
+                ->orderBy('penjualan.id_penjualan', 'desc')
+                ->get();
+        } elseif (auth()->user()->level == 4) {
+            $penjualan = Penjualan::with('member')
+                ->join('users', 'penjualan.id_user', '=', 'users.id')
+                ->where('users.level', 4)
+                ->orderBy('penjualan.id_penjualan', 'desc')
+                ->get();
+        } elseif (auth()->user()->level == 5) {
+            $penjualan = Penjualan::with('member')
+                ->join('users', 'penjualan.id_user', '=', 'users.id')
+                ->where('users.level', 5)
+                ->orderBy('penjualan.id_penjualan', 'desc')
+                ->get();
         } else {
             $penjualan = Penjualan::with('member')
                 ->where('id_user', '=', Auth::id())
                 ->orderBy('id_penjualan', 'desc')
                 ->get();
+        }
 
-            return datatables()
-                ->of($penjualan)
-                ->addIndexColumn()
-                ->addColumn('total_item', function ($penjualan) {
-                    return format_uang($penjualan->total_item);
-                })
-                ->addColumn('total_harga', function ($penjualan) {
-                    return 'Rp. ' . format_uang($penjualan->total_harga);
-                })
-                ->addColumn('bayar', function ($penjualan) {
-                    return 'Rp. ' . format_uang($penjualan->bayar);
-                })
-                ->addColumn('tanggal', function ($penjualan) {
-                    return tanggal_indonesia($penjualan->created_at, false);
-                })
-                ->addColumn('kode_member', function ($penjualan) {
-                    $member = $penjualan->member->kode_member ?? '';
-                    return '<span class="label label-success">' . $member . '</spa>';
-                })
-                ->editColumn('diskon', function ($penjualan) {
-                    return $penjualan->diskon . '%';
-                })
-                ->editColumn('kasir', function ($penjualan) {
-                    return $penjualan->user->name ?? '';
-                })
-                ->addColumn('aksi', function ($penjualan) {
-                    return '
+        return datatables()
+            ->of($penjualan)
+            ->addIndexColumn()
+            ->addColumn('total_item', function ($penjualan) {
+                return format_uang($penjualan->total_item);
+            })
+            ->addColumn('total_harga', function ($penjualan) {
+                return 'Rp. ' . format_uang($penjualan->total_harga);
+            })
+            ->addColumn('bayar', function ($penjualan) {
+                return 'Rp. ' . format_uang($penjualan->bayar);
+            })
+            ->addColumn('tanggal', function ($penjualan) {
+                return tanggal_indonesia($penjualan->created_at, false);
+            })
+            ->addColumn('kode_member', function ($penjualan) {
+                $member = $penjualan->member->kode_member ?? '';
+                return '<span class="label label-success">' . $member . '</span>';
+            })
+            ->addColumn('pembayaran', function ($penjualan) {
+                if ($penjualan->pembayaran == 'kredit') {
+                    return '<span class="label label-warning" style="text-transform: capitalize">' . $penjualan->pembayaran . '</span>';
+                } else {
+                    return '<span class="label label-primary" style="text-transform: capitalize">' . $penjualan->pembayaran . '</span>';
+                }
+            })
+            ->editColumn('diskon', function ($penjualan) {
+                return $penjualan->diskon . '%';
+            })
+            ->editColumn('kasir', function ($penjualan) {
+                return $penjualan->user->name ?? '';
+            })
+            ->addColumn('aksi', function ($penjualan) {
+                return '
                 <div class="btn-group">
-                    <button onclick="showDetail(`' . route('kasir.show', $penjualan->id_penjualan) . '`)" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></button>
+                    <button onclick="showDetail(`' . route('penjualan.show', $penjualan->id_penjualan) . '`)" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></button>
+                    <button onclick="deleteData(`' . route('penjualan.destroy', $penjualan->id_penjualan) . '`)" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                 </div>
                 ';
-                })
-                ->rawColumns(['aksi', 'kode_member'])
-                ->make(true);
-        }
+            })
+            ->rawColumns(['aksi', 'kode_member', 'pembayaran'])
+            ->make(true);
     }
 
     public function show($id)
@@ -131,24 +122,74 @@ class KasirController extends Controller
     {
         $akhir = Carbon::parse($akhir)->endOfDay();
         if (auth()->user()->level == 1) {
-            $penjualan = PenjualanDetail::join('penjualan', 'penjualan_detail.id_penjualan', '=', 'penjualan.id_penjualan')
-                ->select('penjualan_detail.*', 'penjualan.*')
-                ->whereBetween('penjualan_detail.created_at', [$awal, $akhir])
+            // $penjualan = PenjualanDetail::join('penjualan', 'penjualan_detail.id_penjualan', '=', 'penjualan.id_penjualan')
+            //     ->select('penjualan_detail.*', 'penjualan.*')
+            //     ->whereBetween('penjualan_detail.created_at', [$awal, $akhir])
+            //     ->get();
+            $penjualan = Penjualan::whereBetween('created_at', [$awal, $akhir])->get();
+        } elseif (auth()->user()->level == 2) {
+            // $penjualan = PenjualanDetail::join('penjualan', 'penjualan_detail.id_penjualan', '=', 'penjualan.id_penjualan')
+            //     ->join('users', 'penjualan.id_user', '=', 'users.id')
+            //     ->where('users.level', 2)
+            //     ->orWhere('users.level', 6)
+            //     ->select('penjualan_detail.*', 'penjualan.*')
+            //     ->whereBetween('penjualan_detail.created_at', [$awal, $akhir])
+            //     ->get();
+            $penjualan = Penjualan::join('users', 'penjualan.id_user', '=', 'users.id')
+                ->where('users.level', 2)
+                ->orWhere('users.level', 6)
+                ->whereBetween('created_at', [$awal, $akhir])
+                ->get();
+        } elseif (auth()->user()->level == 4) {
+            // $penjualan = PenjualanDetail::join('penjualan', 'penjualan_detail.id_penjualan', '=', 'penjualan.id_penjualan')
+            //     ->join('users', 'penjualan.id_user', '=', 'users.id')
+            //     ->where('users.level', 4)
+            //     ->select('penjualan_detail.*', 'penjualan.*')
+            //     ->whereBetween('penjualan_detail.created_at', [$awal, $akhir])
+            //     ->get();
+            $penjualan = Penjualan::join('users', 'penjualan.id_user', '=', 'users.id')
+                ->where('users.level', 4)
+                ->whereBetween('created_at', [$awal, $akhir])
+                ->get();
+        } elseif (auth()->user()->level == 5) {
+            // $penjualan = PenjualanDetail::join('penjualan', 'penjualan_detail.id_penjualan', '=', 'penjualan.id_penjualan')
+            //     ->join('users', 'penjualan.id_user', '=', 'users.id')
+            //     ->where('users.level', 5)
+            //     ->select('penjualan_detail.*', 'penjualan.*')
+            //     ->whereBetween('penjualan_detail.created_at', [$awal, $akhir])
+            //     ->get();
+            $penjualan = Penjualan::join('users', 'penjualan.id_user', '=', 'users.id')
+                ->where('users.level', 5)
+                ->whereBetween('created_at', [$awal, $akhir])
                 ->get();
         } else {
-            $penjualan = PenjualanDetail::join('penjualan', 'penjualan_detail.id_penjualan', '=', 'penjualan.id_penjualan')
-                ->select('penjualan_detail.*', 'penjualan.*')
-                ->where('penjualan.id_user', '=', Auth::id())
-                ->whereBetween('penjualan_detail.created_at', [$awal, $akhir])
+            // $penjualan = PenjualanDetail::join('penjualan', 'penjualan_detail.id_penjualan', '=', 'penjualan.id_penjualan')
+            //     ->where('penjualan.id_user', Auth::id())
+            //     ->select('penjualan_detail.*', 'penjualan.*')
+            //     ->whereBetween('penjualan_detail.created_at', [$awal, $akhir])
+            //     ->get();
+            $penjualan = Penjualan::where('penjualan.id_user', Auth::id())
+                ->whereBetween('created_at', [$awal, $akhir])
                 ->get();
         }
 
+        // dd($penjualan);
+
+        $no = 1;
         $total = 0;
+        $total_kredit = 0;
+        $total_tunai = 0;
         foreach ($penjualan as $item) {
-            $total += $item->subtotal;
+            $total += $item->bayar;
+
+            if ($item->pembayaran == 'kredit') {
+                $total_kredit += $item->bayar;
+            } else {
+                $total_tunai += $item->bayar;
+            }
         }
 
-        $pdf  = PDF::loadView('kasir.laporan', compact('awal', 'akhir', 'penjualan', 'total'));
+        $pdf  = PDF::loadView('kasir.laporan', compact('awal', 'akhir', 'penjualan', 'total', 'no', 'total_kredit', 'total_tunai'));
         return $pdf->inline('Laporan-Penjualan-' . date('Y-m-d-his') . '.pdf');
     }
 }

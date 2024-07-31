@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,27 +12,32 @@
             /* font-family: Arial, Helvetica, sans-serif; */
             font-size: 14px;
         }
+
         table.data td,
         table.data th {
             border: 1px solid #ccc;
             padding: 5px;
         }
+
         table.data {
             border-collapse: collapse;
         }
+
         .text-center {
             text-align: center;
         }
+
         .text-right {
             text-align: right;
         }
     </style>
 </head>
+
 <body>
     <table width="100%">
         <tr>
             <td rowspan="4" width="60%">
-                {{-- <img src="{{ public_path($setting->path_logo) }}" alt="{{ $setting->path_logo }}" width="30"> --}}
+                <img src="{{ asset('img/logo.png') }}" width="30">
                 <br>
                 {{ $setting->alamat }}
                 <br>
@@ -41,8 +47,12 @@
             <td>: {{ tanggal_indonesia(date('Y-m-d')) }}</td>
         </tr>
         <tr>
-            <td>Kode Member</td>
+            <td>Kode Anggota</td>
             <td>: {{ $penjualan->member->kode_member ?? '' }}</td>
+        </tr>
+        <tr>
+            <td>Nama Anggota</td>
+            <td>: {{ $penjualan->member->nama ?? '' }}</td>
         </tr>
     </table>
 
@@ -61,7 +71,7 @@
         <tbody>
             @foreach ($detail as $key => $item)
                 <tr>
-                    <td class="text-center">{{ $key+1 }}</td>
+                    <td class="text-center">{{ $key + 1 }}</td>
                     <td>{{ $item->produk->nama_produk }}</td>
                     <td>{{ $item->produk->kode_produk }}</td>
                     <td class="text-right">{{ format_uang($item->harga_jual) }}</td>
@@ -84,22 +94,44 @@
                 <td colspan="6" class="text-right"><b>Total Bayar</b></td>
                 <td class="text-right"><b>{{ format_uang($penjualan->bayar) }}</b></td>
             </tr>
-            <tr>
-                <td colspan="6" class="text-right"><b>Diterima</b></td>
-                <td class="text-right"><b>{{ format_uang($penjualan->diterima) }}</b></td>
-            </tr>
-            <tr>
-                <td colspan="6" class="text-right"><b>Kembali</b></td>
-                <td class="text-right"><b>{{ format_uang($penjualan->diterima - $penjualan->bayar) }}</b></td>
-            </tr>
+            @if ($penjualan->pembayaran == 'kredit')
+                <tr>
+                    <td colspan="6" class="text-right"><b>Kredit Cicilan</b></td>
+                    <td class="text-right"><b>x {{ $penjualan->cicilan }} Bulan</b></td>
+                </tr>
+                <tr>
+                    <td colspan="6" class="text-right"><b>Pembayaran Per Bulan</b></td>
+                    <td class="text-right"><b>{{ format_uang($penjualan->bayar / $penjualan->cicilan) }}</b></td>
+                </tr>
+            @else
+                <tr>
+                    <td colspan="6" class="text-right"><b>Diterima</b></td>
+                    <td class="text-right"><b>{{ format_uang($penjualan->diterima) }}</b></td>
+                </tr>
+                <tr>
+                    <td colspan="6" class="text-right"><b>Kembali</b></td>
+                    <td class="text-right"><b>{{ format_uang($penjualan->diterima - $penjualan->bayar) }}</b></td>
+                </tr>
+            @endif
         </tfoot>
     </table>
 
     <table width="100%">
         <tr>
-            <td><b>Terimakasih telah berbelanja dan sampai jumpa</b></td>
+            <td>
+                Anggota
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                {{ $penjualan->member->nama ?? '' }}
+            </td>
             <td class="text-center">
                 Kasir
+                <br>
+                <br>
+                <br>
                 <br>
                 <br>
                 {{ auth()->user()->name }}
@@ -107,4 +139,5 @@
         </tr>
     </table>
 </body>
+
 </html>

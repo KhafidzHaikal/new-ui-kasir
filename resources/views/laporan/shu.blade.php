@@ -83,9 +83,17 @@
             <tr>
                 <td>1</td>
                 <td>{{ tanggal_indonesia($akhir, false) }}</td>
-                <td>{{ format_uang($penjualan - $hpp) }}</td>
+                @if (auth()->user()->level == 1 || auth()->user()->level == 4)
+                    <td>{{ format_uang($penjualan + $jasa - $hpp) }}</td>
+                @else
+                    <td>{{ format_uang($penjualan - $hpp) }}</td>
+                @endif
                 <td>{{ format_uang($pengeluaran) }}</td>
-                <td>{{ format_uang(($penjualan - $hpp) - $pengeluaran ) }}</td>
+                @if (auth()->user()->level == 1 || auth()->user()->level == 4)
+                    <td>{{ format_uang($penjualan + $jasa - $hpp - $pengeluaran) }}</td>
+                @else
+                    <td>{{ format_uang($penjualan - $hpp - $pengeluaran) }}</td>
+                @endif
             </tr>
         </tbody>
     </table>

@@ -17,6 +17,7 @@ class CreateJasasTable extends Migration
             $table->increments('id_jasa');
             $table->text('deskripsi');
             $table->integer('nominal');
+            $table->integer('persen')->default(0);
             $table->foreignId('id_user')->onDelete('cascade');
             $table->timestamps();
         });

@@ -7,6 +7,7 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as Barpdf;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class MemberController extends Controller
 {
@@ -149,6 +150,7 @@ class MemberController extends Controller
 
     public function pdf() {
         $member = Member::all();
+        // $member = DB::table('member')->update(['created_at' => now(), 'updated_at' => now()]);
         $akhir = Carbon::now();
         return view('member.pdf', [
             'member' => $member,

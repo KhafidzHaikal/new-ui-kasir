@@ -4,10 +4,10 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Pilih Member</h4>
+                <h4 class="modal-title">Pilih Anggota</h4>
             </div>
             <div class="modal-body">
-                <table class="table table-striped table-bordered table-member">
+                <table class="table table-striped table-bordered table-produk">
                     <thead>
                         <th width="5%">No</th>
                         <th>Nama</th>

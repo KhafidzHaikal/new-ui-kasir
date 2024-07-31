@@ -16,44 +16,69 @@
                 <div class="box-header with-border">
                     <button onclick="addForm('{{ route('pengeluaran.store') }}')" class="btn btn-success btn-flat"><i
                             class="fa fa-plus-circle"></i> Tambah</button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i
-                            class="fa fa-file-excel-o"></i> Laporan</button>
-                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Laporan Pengeluaran</h5>
-                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
+                    @if (auth()->user()->level == 6)
+                    @else
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target=".bd-example-modal-lg"><i class="fa fa-file-excel-o"></i> Laporan</button>
+                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Laporan Pengeluaran</h5>
+                                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                        </button>
+                                    </div>
                                     <div class="modal-body">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Tanggal Awal</label>
-                                            <div class="col-sm-5">
-                                                <input type="date" class="form-control" id="awal" required>
+                                        @if (auth()->user()->level == 1 || auth()->user()->level == 4)
+                                            <div class="modal-body">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Pengeluaran</label>
+                                                    <div class="col-sm-5">
+                                                        <select id="jenis" class="form-control" required>
+                                                            <option value="">Pilih Tipe Pengeluaran</option>
+                                                            <option value="cuci">Jasa Cuci</option>
+                                                            <option value="service">Jasa Service</option>
+                                                            <option value="operasional">Operasional</option>
+                                                            <option value="semua">Semua Pengeluaran</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        <div class="modal-body">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Tanggal Awal</label>
+                                                <div class="col-sm-5">
+                                                    <input type="date" class="form-control" id="awal" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Tanggal Akhir</label>
+                                                <div class="col-sm-5">
+                                                    <input type="date" class="form-control" id="akhir" required
+                                                        value="{{ request('awal') ?? date('Y-m-d') }}">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Tanggal Akhir</label>
-                                            <div class="col-sm-5">
-                                                <input type="date" class="form-control" id="akhir" required
-                                                    value="{{ request('awal') ?? date('Y-m-d') }}">
-                                            </div>
-                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        @if (auth()->user()->level == 1 || auth()->user()->level == 4)
+                                            <a target="_blank"
+                                                onclick="this.href='/pengeluaran/' +document.getElementById('jenis').value+ '/' +document.getElementById('awal').value+ '/' +document.getElementById('akhir').value"
+                                                class="btn btn-primary">Cetak</a>
+                                        @else
+                                            <a target="_blank"
+                                                onclick="this.href='/pengeluaran/semua/'+document.getElementById('awal').value+ '/' +document.getElementById('akhir').value"
+                                                class="btn btn-primary">Cetak</a>
+                                        @endif
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <a target="_blank"
-                                        onclick="this.href='/pengeluaran/'+document.getElementById('awal').value+ '/' +document.getElementById('akhir').value"
-                                        class="btn btn-primary">Cetak</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
                 <div class="box-body table-responsive">
                     <table class="table table-stiped table-bordered">

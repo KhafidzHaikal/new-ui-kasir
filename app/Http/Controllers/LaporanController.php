@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jasa;
 use Carbon\Carbon;
 
 use App\Models\Produk;
@@ -359,6 +360,8 @@ class LaporanController extends Controller
     public function hasil_usaha($tanggal_awal, $tanggal_akhir)
     {
         $tanggal_akhir = Carbon::parse($tanggal_akhir)->endOfDay();
+        $jasa = Jasa::whereBetween('created_at', [$tanggal_awal, $tanggal_akhir])
+                ->sum('nominal');
         if (auth()->user()->level == 4) {
             $results = DB::table('backup_produks')
                 ->where('backup_produks.id_kategori', 4)
@@ -458,12 +461,13 @@ class LaporanController extends Controller
             $totalValue += (($result->harga_beli * $result->stok_awal) + ($result->stok_belanja * $result->harga_beli)) - ($result->harga_beli * $result->stok_akhir);
         }
 
-        return view('laporan.hasil_usaha', ['awal' => $tanggal_awal, 'akhir' => $tanggal_akhir, 'penjualan'  => $penjualan, 'hpp' => $totalValue]);
+        return view('laporan.hasil_usaha', ['awal' => $tanggal_awal, 'akhir' => $tanggal_akhir, 'penjualan'  => $penjualan, 'hpp' => $totalValue, 'jasa' => $jasa]);
     }
 
     public function shu($awal_tanggal, $akhir_tanggal)
     {
         $akhir_tanggal = Carbon::parse($akhir_tanggal)->endOfDay();
+        $jasa = Jasa::whereBetween('created_at', [$awal_tanggal, $akhir_tanggal])->sum('nominal');
         if (auth()->user()->level == 4) {
             $results = DB::table('backup_produks')
                 ->where('backup_produks.id_kategori', 4)
@@ -569,6 +573,7 @@ class LaporanController extends Controller
             $pengeluaran = DB::table('pengeluaran')
                 ->join('users', 'pengeluaran.id_user', '=', 'users.id')
                 ->where('users.level', 2)
+                ->orWhere('users.level', 6)
                 ->whereBetween('pengeluaran.created_at', [$awal_tanggal, $akhir_tanggal])
                 ->sum('pengeluaran.nominal');
         }
@@ -579,7 +584,7 @@ class LaporanController extends Controller
             $totalValue += (($result->harga_beli * $result->stok_awal) + ($result->stok_belanja * $result->harga_beli)) - ($result->harga_beli * $result->stok_akhir);
         }
 
-        return view('laporan.shu', ['awal' => $awal_tanggal, 'akhir' => $akhir_tanggal, 'pengeluaran' => $pengeluaran, 'penjualan'  => $penjualan, 'hpp' => $totalValue]);
+        return view('laporan.shu', ['awal' => $awal_tanggal, 'akhir' => $akhir_tanggal, 'pengeluaran' => $pengeluaran, 'penjualan'  => $penjualan, 'hpp' => $totalValue, 'jasa' => $jasa]);
     }
 
     public function jurnal_penjualan($tanggal_aw, $tanggal_ak)

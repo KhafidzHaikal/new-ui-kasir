@@ -19,15 +19,29 @@ class PengeluaranController extends Controller
         if (auth()->user()->level == 4) {
             $pengeluaran = Pengeluaran::join('users', 'id_user', '=', 'users.id')
                 ->where('users.level', 4)
+                ->orWhere(function ($query) {
+                    $query->where('users.level', 1)
+                        ->whereIn('pengeluaran.deskripsi', ['Jasa Service', 'Jasa Cuci']);
+                })
+                ->select('pengeluaran.*')
                 ->orderBy('id_pengeluaran', 'desc')
                 ->get();
         } elseif (auth()->user()->level == 5) {
             $pengeluaran = Pengeluaran::join('users', 'id_user', '=', 'users.id')
                 ->where('users.level', 5)
+                ->select('pengeluaran.*')
                 ->orderBy('id_pengeluaran', 'desc')
                 ->get();
-        } else {
+        } elseif (auth()->user()->level == 1) {
             $pengeluaran = Pengeluaran::orderBy('id_pengeluaran', 'desc')->get();
+        } else {
+            $pengeluaran = DB::table('pengeluaran')
+                ->join('users', 'pengeluaran.id_user', '=', 'users.id')
+                ->where('users.level', 2)
+                ->orWhere('users.level', 6)
+                ->select('pengeluaran.*')
+                ->orderBy('id_pengeluaran', 'desc')
+                ->get();
         }
 
         return datatables()
@@ -126,33 +140,81 @@ class PengeluaranController extends Controller
         return response(null, 204);
     }
 
-    public function pdf($awal, $akhir)
+    public function pdf($text, $awal, $akhir)
     {
         $akhir = Carbon::parse($akhir)->endOfDay();
 
-        if (auth()->user()->level == 4) {
-            $pengeluaran = DB::table('pengeluaran')
-                ->join('users', 'pengeluaran.id_user', '=', 'users.id')
-                ->where('users.level', 4)
-                ->whereBetween('pengeluaran.created_at', [$awal, $akhir])
-                ->get();
-        } elseif (auth()->user()->level == 5) {
-            $pengeluaran = DB::table('pengeluaran')
-                ->join('users', 'pengeluaran.id_user', '=', 'users.id')
-                ->where('users.level', 5)
-                ->whereBetween('pengeluaran.created_at', [$awal, $akhir])
-                ->get();
-        } else {
-            $pengeluaran = Pengeluaran::whereBetween('created_at', [$awal, $akhir])->get();
+        if ($text == 'cuci') {
+            $title = 'Jasa Cuci';
+            if (auth()->user()->level == 4 || auth()->user()->level == 1) {
+                $pengeluaran = DB::table('pengeluaran')
+                    ->join('users', 'pengeluaran.id_user', '=', 'users.id')
+                    ->where([['users.level', 4], ['pengeluaran.deskripsi', 'Jasa Cuci']])
+                    ->orWhere([['users.level', 1], ['pengeluaran.deskripsi', 'Jasa Cuci']])
+                    ->select('pengeluaran.*')
+                    ->whereBetween('pengeluaran.created_at', [$awal, $akhir])
+                    ->get();
+            }
+        } elseif ($text == 'service') {
+            $title = 'Jasa Service';
+            if (auth()->user()->level == 4 || auth()->user()->level == 1) {
+                $pengeluaran = DB::table('pengeluaran')
+                    ->join('users', 'pengeluaran.id_user', '=', 'users.id')
+                    ->where([['users.level', 4], ['pengeluaran.deskripsi', 'Jasa Service']])
+                    ->orWhere([['users.level', 1], ['pengeluaran.deskripsi', 'Jasa Service']])
+                    ->select('pengeluaran.*')
+                    ->whereBetween('pengeluaran.created_at', [$awal, $akhir])
+                    ->get();
+            }
+        } elseif ($text == 'operasional') {
+            $title = 'Jasa Operasional';
+            if (auth()->user()->level == 4 || auth()->user()->level == 1) {
+                $pengeluaran = DB::table('pengeluaran')
+                    ->join('users', 'pengeluaran.id_user', '=', 'users.id')
+                    ->where([['users.level', 4], ['pengeluaran.deskripsi', '!=', 'Jasa Service'], ['pengeluaran.deskripsi', '!=', 'Jasa Cuci']])
+                    ->select('pengeluaran.*')
+                    ->whereBetween('pengeluaran.created_at', [$awal, $akhir])
+                    ->get();
+            }
+        } elseif ($text == 'semua') {
+            $title = 'Semua';
+            if (auth()->user()->level == 4) {
+                $pengeluaran = DB::table('pengeluaran')
+                    ->join('users', 'pengeluaran.id_user', '=', 'users.id')
+                    ->where('users.level', 4)
+                    ->orWhere(function ($query) {
+                        $query->where('users.level', 1)
+                            ->whereIn('pengeluaran.deskripsi', ['Jasa Service', 'Jasa Cuci']);
+                    })
+                    ->whereBetween('pengeluaran.created_at', [$awal, $akhir])
+                    ->select('pengeluaran.*')
+                    ->get();
+            } elseif (auth()->user()->level == 5) {
+                $pengeluaran = DB::table('pengeluaran')
+                    ->join('users', 'pengeluaran.id_user', '=', 'users.id')
+                    ->where('users.level', 5)
+                    ->whereBetween('pengeluaran.created_at', [$awal, $akhir])
+                    ->select('pengeluaran.*')
+                    ->get();
+            } elseif (auth()->user()->level == 1) {
+                $pengeluaran = Pengeluaran::whereBetween('created_at', [$awal, $akhir])->get();
+            } else {
+                $pengeluaran = DB::table('pengeluaran')
+                    ->join('users', 'pengeluaran.id_user', '=', 'users.id')
+                    ->where('users.level', 2)
+                    ->orWhere('users.level', 6)
+                    ->select('pengeluaran.*')
+                    ->whereBetween('pengeluaran.created_at', [$awal, $akhir])
+                    ->get();
+            }
         }
-
 
         $jumlah = 0;
         foreach ($pengeluaran as $item) {
             $jumlah += $item->nominal;
         }
         return view('pengeluaran.pdf', [
-            'awal' => $awal, 'akhir' => $akhir, 'pengeluaran' => $pengeluaran, 'jumlah' => $jumlah
+            'awal' => $awal, 'akhir' => $akhir, 'pengeluaran' => $pengeluaran, 'jumlah' => $jumlah, 'title' => $title
         ]);
     }
 }

@@ -73,7 +73,7 @@
             <tr>
                 <th width="15%"></th>
                 <th>Rincian pembelian</th>
-                <th width="15%">P</th>
+                <th width="15%">D</th>
                 <th width="15%">K</th>
             </tr>
         </thead>
@@ -81,27 +81,27 @@
             <tr>
                 <th>KAS</th>
                 <td></td>
-                <th style="text-align: right">{{ format_uang($pembelian) }}</th>
                 <td></td>
+                <th style="text-align: right">{{ format_uang($pembelian) }}</th>
             </tr>
             <tr>
                 <th>Pembelian</th>
                 <td></td>
-                <td></td>
                 <th style="text-align: right">{{ format_uang($value_pembelian) }}</th>
+                <td></td>
             </tr>
             @foreach ($detail_pembelian as $item)
                 <tr>
                     <td></td>
                     <td style="text-align: left">{{ $item->nama_produk }}</td>
-                    <td></td>
                     <td style="text-align: right">{{ format_uang($item->total_harga) }}</td>
+                    <td></td>
                 </tr>
             @endforeach
             <tr>
                 <th colspan="2" style="text-align: center">Total Pembelian</th>
-                <th style="text-align: right">{{ format_uang($pembelian) }}</th>
                 <th style="text-align: right">{{ format_uang($value_pembelian) }}</th>
+                <th style="text-align: right">{{ format_uang($pembelian) }}</th>
             </tr>
         </tbody>
     </table>

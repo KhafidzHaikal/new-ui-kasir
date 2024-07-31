@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Produk;
 use App\Models\Kategori;
+use App\Models\Member;
 use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
@@ -197,6 +198,16 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SettingTableSeeder::class,
             UserTableSeeder::class,
+        ]);
+
+        Member::create([
+            'id_member' => 1,
+            'kode_member' => 'M092198',
+            'nama' => 'Haikal', 
+            'alamat' => 'Bulak',
+            'telepon' => '00121927121',
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 }
