@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
         Route::get('/penjualan/{pembayaran}/{awal}/{akhir}', [PenjualanController::class, 'pdf'])->name('penjualan.pdf');
 
+        Route::get('/transaksi-penjualan-nota/{id}', [PenjualanController::class, 'nota'])->name('penjualan.nota');
     });
     Route::group(['middleware' => 'level:1,4'], function () {
         Route::get('/jasa/data', [JasaController::class, 'data'])->name('jasa.data');

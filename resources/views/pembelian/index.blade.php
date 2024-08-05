@@ -126,8 +126,8 @@
             $('.table-supplier').DataTable();
             table1 = $('.table-detail').DataTable({
                 processing: true,
-                bSort: false,
-                dom: 'Brt',
+                // bSort: false,
+                // dom: 'Brt',
                 columns: [{
                         data: 'DT_RowIndex',
                         searchable: false,

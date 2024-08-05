@@ -73,32 +73,30 @@
                     <th>Total</th>
                 @elseif ($title == 'KREDIT')
                     <th width="5%" rowspan="10">No</th>
-            <tr>
-                <th width="5%">Tanggal</th>
-                <th width="5%">Nama Kasir</th>
-                <th width="5%">Kode Anggota</th>
-                <th width="15%">Nama Anggota</th>
-                <th width="15%">Nama Barang</th>
-                <th width="6%">Jumlah Barang</th>
-                <th width="10%">Harga Jual</th>
-                <th width="10%">Total</th>
-                <th width="10%">Kredit Cicilan</th>
-                <th width="8%">Pembayaran Per Bulan</th>
-            </tr>
-        @else
-            <th width="5%">No</th>
-            <th width="5%">Tanggal</th>
-            <th width="5%">Pembayaran</th>
-            <th width="5%">Nama Kasir</th>
-            <th width="5%">Kode Anggota</th>
-            <th width="15%">Nama Anggota</th>
-            <th width="15%">Nama Barang</th>
-            <th width="6%">Jumlah Barang</th>
-            <th width="10%">Harga Jual</th>
-            <th width="10%">Total</th>
-            <th width="10%">Kredit Cicilan</th>
-            <th width="8%">Pembayaran Per Bulan</th>
-            @endif
+                    <th width="5%">Tanggal</th>
+                    <th width="5%">Nama Kasir</th>
+                    <th width="5%">Kode Anggota</th>
+                    <th width="15%">Nama Anggota</th>
+                    <th width="15%">Nama Barang</th>
+                    <th width="6%">Jumlah Barang</th>
+                    <th width="10%">Harga Jual</th>
+                    <th width="10%">Total</th>
+                    <th width="10%">Kredit Cicilan</th>
+                    <th width="8%">Pembayaran Per Bulan</th>
+                @else
+                    <th width="5%">No</th>
+                    <th width="5%">Tanggal</th>
+                    <th width="5%">Pembayaran</th>
+                    <th width="5%">Nama Kasir</th>
+                    <th width="5%">Kode Anggota</th>
+                    <th width="15%">Nama Anggota</th>
+                    <th width="15%">Nama Barang</th>
+                    <th width="6%">Jumlah Barang</th>
+                    <th width="10%">Harga Jual</th>
+                    <th width="10%">Total</th>
+                    <th width="10%">Kredit Cicilan</th>
+                    <th width="8%">Pembayaran Per Bulan</th>
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -229,7 +227,7 @@
                                     @endforeach
                                 </td>
                                 <td style="text-align: right">{{ format_uang($data->bayar) }}</td>
-                                <td style="text-align: right">x {{ $data->cicilan }} Bulan</td>
+                                <td style="text-align: right">{{ $data->cicilan != 0 ? ('x '. $data->cicilan .'Bulan') : '-' }}</td>
                                 <td style="text-align: right">{{ format_uang($data->bayar / $data->cicilan) }}</td>
                             </tr>
                         @endif

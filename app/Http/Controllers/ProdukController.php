@@ -297,7 +297,6 @@ class ProdukController extends Controller
     {
         $akhir = Carbon::parse($akhir)->endOfDay();
         if (auth()->user()->level == 4) {
-            // $produk = Produk::where('id_kategori', 4)->update(['created_at' => now()]);
             // dd($produk);
             $produk = Produk::leftJoin('pembelian_detail', 'pembelian_detail.id_produk', '=', 'produk.id_produk')
                 ->leftJoin('penjualan_detail', 'penjualan_detail.id_produk', '=', 'produk.id_produk')
@@ -351,6 +350,7 @@ class ProdukController extends Controller
                 ->groupBy('produk.id_produk')
                 ->get();
         } elseif (auth()->user()->level == 1) {
+            $produk = Produk::where('id_kategori', 5)->update(['created_at' => now()]);
             $produk = Produk::leftJoin('pembelian_detail', 'pembelian_detail.id_produk', '=', 'produk.id_produk')
                 ->leftJoin('penjualan_detail', 'penjualan_detail.id_produk', '=', 'produk.id_produk')
                 ->leftJoin('penjualan', 'penjualan_detail.id_penjualan', '=', 'penjualan.id_penjualan')

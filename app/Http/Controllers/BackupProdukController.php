@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BackupProduk;
 use App\Models\PembelianDetail;
+use App\Models\Produk;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -38,6 +39,7 @@ class BackupProdukController extends Controller
     public function store()
     {
         $currentMonth = date('Y-m');
+        $produk = Produk::where('id_kategori', 5)->update(['created_at' => now()], ['deleted_at' => now()]);
         $twoMonthsAhead = date('Y-m', strtotime("$currentMonth + 2 months"));
 
         if(auth()->user()->level == 4) {
