@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     // 4 Bengkel
     // 5 Fotocopy
     // 6 Kasir
+    // 7 SHU
 
     Route::group(['middleware' => 'level:1,2,4,5,6'], function () {
         Route::get('/member/data', [MemberController::class, 'data'])->name('member.data');
@@ -59,7 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])->name('penjualan.destroy');
         Route::get('/penjualan/{pembayaran}/{awal}/{akhir}', [PenjualanController::class, 'pdf'])->name('penjualan.pdf');
 
-        Route::get('/transaksi-penjualan-nota/{id}', [PenjualanController::class, 'nota'])->name('penjualan.nota');
+        Route::get('/transaksi-penjualan-nota/{jenis}/{id}', [PenjualanController::class, 'nota'])->name('penjualan.nota');
     });
     Route::group(['middleware' => 'level:1,4'], function () {
         Route::get('/jasa/data', [JasaController::class, 'data'])->name('jasa.data');
@@ -124,6 +125,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/transaksi/search', [PenjualanDetailController::class, 'search'])->name('search');
     });
 
+    Route::group(['middleware' => 'level:1,2,4,5,7'], function () {
+        Route::get('/user/data', [UserController::class, 'data'])->name('user.data');
+        Route::resource('/user', UserController::class);
+    });
+    
     Route::group(['middleware' => 'level:1,2,4,5'], function () {
         Route::post('/produk/backup', [BackupProdukController::class, 'store'])->name('produk.backup_data');
 
@@ -136,9 +142,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/laporan/shu/{awal}/{akhir}', [LaporanController::class, 'shu'])->name('laporan.shu');
         Route::get('/laporan/jurnal_penjualan/{tanggal_aw}/{tanggal_ak}', [LaporanController::class, 'jurnal_penjualan'])->name('laporan.jurnal_penjualan');
         Route::get('/laporan/jurnal_pembelian/{tang_awal}/{tang_akhir}', [LaporanController::class, 'jurnal_pembelian'])->name('laporan.jurnal_pembelian');
-
-        Route::get('/user/data', [UserController::class, 'data'])->name('user.data');
-        Route::resource('/user', UserController::class);
 
         Route::get('/pengeluaran/{jenis}/{awal}/{akhir}', [PengeluaranController::class, 'pdf'])->name('pengeluaran.pdf');
         Route::get('/export-anggota-kpri', [MemberController::class, 'pdf'])->name('member.pdf');

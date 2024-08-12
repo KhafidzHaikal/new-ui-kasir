@@ -87,9 +87,9 @@ class PenjualanController extends Controller
                 return '
                 <div class="btn-group">
                     <button onclick="showDetail(`' . route('penjualan.show', $penjualan->id_penjualan) . '`)" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></button>
-                    <button type="button" onclick="nota(`' . route('penjualan.nota', $penjualan->id_penjualan) . '`)" class="btn btn-warning btn-flat"><i class="fa fa-print"></i></button>
+                    <button type="button" onclick="openNotaModal(' . $penjualan->id_penjualan . ')" class="btn btn-warning btn-flat"><i class="fa fa-print"></i></button>
                     <button onclick="deleteData(`' . route('penjualan.destroy', $penjualan->id_penjualan) . '`)" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></button>
-                </div>
+                </div>                
                 ';
             })
             ->rawColumns(['aksi', 'kode_member', 'pembayaran'])
@@ -459,7 +459,7 @@ class PenjualanController extends Controller
         return $pdf->inline('Transaksi-' . date('Y-m-d-his') . '.pdf');
     }
 
-    public function nota($id)
+    public function nota($jenis, $id)
     {
         $setting = Setting::first();
         $penjualan = Penjualan::find($id);
@@ -468,6 +468,10 @@ class PenjualanController extends Controller
             ->where('id_penjualan', $id)
             ->get();
 
-        return view('penjualan.nota_kecil', compact('setting', 'penjualan', 'detail', 'waktu'));
+        if ($jenis == 'tunai') {
+            return view('penjualan.nota_kecil', compact('setting', 'penjualan', 'detail', 'waktu'));
+        } else {
+            return view('penjualan.nota_besar', compact('setting', 'penjualan', 'detail'));
+        }
     }
 }

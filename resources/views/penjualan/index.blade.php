@@ -86,6 +86,30 @@
         </div>
     </div>
 
+    <div class="modal fade" id="notaModal" tabindex="-1" role="dialog" aria-labelledby="notaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notaModalLabel">Pilih Jenis Nota</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <select id="jenis" class="form-control">
+                        <option value="">Pilih Jenis</option>
+                        <option value="tunai">Tunai</option>
+                        <option value="kredit">Kredit</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" id="notaButton" class="btn btn-primary">Cetak Nota</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @includeIf('penjualan.detail')
 @endsection
 
@@ -188,33 +212,19 @@
             }
         }
 
-        function nota(url, title) {
-            popupCenter(url, title, 625, 500);
+
+        function openNotaModal(id) {
+            $('#notaModal').modal('show');
+            $('#notaButton').attr('onclick', 'nota(\'' + id + '\')');
         }
 
-        function popupCenter(url, title, w, h) {
-            const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-            const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
-
-            const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document
-                .documentElement.clientWidth : screen.width;
-            const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document
-                .documentElement.clientHeight : screen.height;
-
-            const systemZoom = width / window.screen.availWidth;
-            const left = (width - w) / 2 / systemZoom + dualScreenLeft
-            const top = (height - h) / 2 / systemZoom + dualScreenTop
-            const newWindow = window.open(url, title,
-                `
-            scrollbars=yes,
-            width  = ${w / systemZoom}, 
-            height = ${h / systemZoom}, 
-            top    = ${top}, 
-            left   = ${left}
-        `
-            );
-
-            if (window.focus) newWindow.focus();
-        }
+        function nota(id) {
+            var jenis = $('#jenis').val();
+            var url = '{{ route('penjualan.nota', ['jenis' => ':jenis', 'id' => ':id']) }}';
+            url = url.replace(':jenis', jenis);
+            url = url.replace(':id', id);
+            // Call the URL to generate the nota
+            window.open(url, '_blank');
+        }   
     </script>
 @endpush
