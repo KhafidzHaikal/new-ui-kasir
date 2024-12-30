@@ -32,6 +32,12 @@ class PengeluaranController extends Controller
                 ->select('pengeluaran.*')
                 ->orderBy('id_pengeluaran', 'desc')
                 ->get();
+        } elseif (auth()->user()->level == 8) {
+            $pengeluaran = Pengeluaran::join('users', 'id_user', '=', 'users.id')
+                ->where('users.level', 8)
+                ->select('pengeluaran.*')
+                ->orderBy('id_pengeluaran', 'desc')
+                ->get();
         } elseif (auth()->user()->level == 1) {
             $pengeluaran = Pengeluaran::orderBy('id_pengeluaran', 'desc')->get();
         } else {
@@ -193,6 +199,13 @@ class PengeluaranController extends Controller
                 $pengeluaran = DB::table('pengeluaran')
                     ->join('users', 'pengeluaran.id_user', '=', 'users.id')
                     ->where('users.level', 5)
+                    ->whereBetween('pengeluaran.created_at', [$awal, $akhir])
+                    ->select('pengeluaran.*')
+                    ->get();
+            } elseif (auth()->user()->level == 8) {
+                $pengeluaran = DB::table('pengeluaran')
+                    ->join('users', 'pengeluaran.id_user', '=', 'users.id')
+                    ->where('users.level', 8)
                     ->whereBetween('pengeluaran.created_at', [$awal, $akhir])
                     ->select('pengeluaran.*')
                     ->get();

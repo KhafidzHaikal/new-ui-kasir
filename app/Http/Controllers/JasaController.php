@@ -59,11 +59,6 @@ class JasaController extends Controller
                 </div>
                     ';
             })
-            // <div class="btn-group">
-            //         <button type="button" onclick="editForm(`' . route('jasa.update', $jasa->id_jasa) . '`)" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i></button>
-            //         <button type="button" onclick="nota(`' . route('transaksi.jasa', $jasa->id_jasa) . '`)" class="btn btn-warning btn-flat"><i class="fa fa-print"></i></button>
-            //         <button type="button" onclick="deleteData(`' . route('jasa.destroy', $jasa->id_jasa) . '`)" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></button>
-            //     </div>
             ->rawColumns(['aksi'])
             ->make(true);
     }

@@ -41,6 +41,12 @@ class KasirController extends Controller
                 ->where('users.level', 5)
                 ->orderBy('penjualan.id_penjualan', 'desc')
                 ->get();
+        } elseif (auth()->user()->level == 8) {
+            $penjualan = Penjualan::with('member')
+                ->join('users', 'penjualan.id_user', '=', 'users.id')
+                ->where('users.level', 8)
+                ->orderBy('penjualan.id_penjualan', 'desc')
+                ->get();
         } else {
             $penjualan = Penjualan::with('member')
                 ->where('id_user', '=', Auth::id())
@@ -160,6 +166,17 @@ class KasirController extends Controller
             //     ->get();
             $penjualan = Penjualan::join('users', 'penjualan.id_user', '=', 'users.id')
                 ->where('users.level', 5)
+                ->whereBetween('created_at', [$awal, $akhir])
+                ->get();
+        } elseif (auth()->user()->level == 8) {
+            // $penjualan = PenjualanDetail::join('penjualan', 'penjualan_detail.id_penjualan', '=', 'penjualan.id_penjualan')
+            //     ->join('users', 'penjualan.id_user', '=', 'users.id')
+            //     ->where('users.level', 5)
+            //     ->select('penjualan_detail.*', 'penjualan.*')
+            //     ->whereBetween('penjualan_detail.created_at', [$awal, $akhir])
+            //     ->get();
+            $penjualan = Penjualan::join('users', 'penjualan.id_user', '=', 'users.id')
+                ->where('users.level', 8)
                 ->whereBetween('created_at', [$awal, $akhir])
                 ->get();
         } else {

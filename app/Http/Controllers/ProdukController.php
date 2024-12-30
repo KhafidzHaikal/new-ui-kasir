@@ -26,6 +26,8 @@ class ProdukController extends Controller
             $kategori = Kategori::where('id_kategori', 4)->pluck('nama_kategori', 'id_kategori');
         } elseif (auth()->user()->level == 5) {
             $kategori = Kategori::where('id_kategori', 5)->pluck('nama_kategori', 'id_kategori');
+        } elseif (auth()->user()->level == 8) {
+            $kategori = Kategori::where('id_kategori', 13)->pluck('nama_kategori', 'id_kategori');
         } elseif (auth()->user()->level == 1) {
             $kategori = Kategori::all()->pluck('nama_kategori', 'id_kategori');
         } else {
@@ -46,6 +48,12 @@ class ProdukController extends Controller
             $backups = DB::table('backup_produks')
             ->join('produk', 'backup_produks.id_produk', '=', 'produk.id_produk')
             ->where('backup_produks.id_kategori', 5)
+            ->select('backup_produks.created_at')
+            ->get();
+        } elseif (auth()->user()->level == 8) {
+            $backups = DB::table('backup_produks')
+            ->join('produk', 'backup_produks.id_produk', '=', 'produk.id_produk')
+            ->where('backup_produks.id_kategori', 13)
             ->select('backup_produks.created_at')
             ->get();
         } elseif (auth()->user()->level == 1) {
@@ -88,6 +96,14 @@ class ProdukController extends Controller
             $stok_kosong = Produk::where([['stok', '<=', 0], ['id_kategori', 5]])
                 ->whereNotNull('stok')
                 ->get();
+        } elseif (auth()->user()->level == 8) {
+            $stok = Produk::where('id_kategori', 13)
+                ->whereBetween('stok', [1, 2])
+                ->whereNotNull('stok')
+                ->get();
+            $stok_kosong = Produk::where([['stok', '<=', 0], ['id_kategori', 13]])
+                ->whereNotNull('stok')
+                ->get();
         } elseif (auth()->user()->level == 1) {
             $stok = Produk::whereBetween('stok', [1, 2])
                 ->whereNotNull('stok')
@@ -125,6 +141,8 @@ class ProdukController extends Controller
             $produk = DB::table('produk')->where('id_kategori', 4)->latest();
         } elseif (auth()->user()->level == 5) {
             $produk = DB::table('produk')->where('id_kategori', 5)->latest();
+        } elseif (auth()->user()->level == 8) {
+            $produk = DB::table('produk')->where('id_kategori', 13)->latest();
         } elseif (auth()->user()->level == 1) {
             $produk = Produk::latest();
         } else {
@@ -346,6 +364,32 @@ class ProdukController extends Controller
                     'users.name'
                 )
                 ->where('produk.id_kategori', 5)
+                ->whereBetween('produk.updated_at', [$awal, $akhir])
+                ->groupBy('produk.id_produk')
+                ->get();
+        } elseif (auth()->user()->level == 8) {
+            $produk = Produk::leftJoin('pembelian_detail', 'pembelian_detail.id_produk', '=', 'produk.id_produk')
+                ->leftJoin('penjualan_detail', 'penjualan_detail.id_produk', '=', 'produk.id_produk')
+                ->leftJoin('penjualan', 'penjualan_detail.id_penjualan', '=', 'penjualan.id_penjualan')
+                ->leftJoin('users', 'penjualan.id_user', '=', 'users.id')
+                ->leftJoin('backup_produks', 'produk.id_produk', '=', 'backup_produks.id_produk')
+                ->select(
+                    'produk.id_produk',
+                    'produk.id_kategori',
+                    'produk.nama_produk',
+                    'produk.created_at',
+                    'produk.stok',
+                    'produk.stok_lama',
+                    'produk.harga_beli',
+                    'pembelian_detail.id_pembelian_detail',
+                    // DB::raw("(select stok_awal from backup_produks as bp where bp.id_produk = backup_produks.id_produk and bp.created_at >= '$awal' order by created_at asc limit 1) as stok_awal"),
+                    'pembelian_detail.jumlah',
+                    'penjualan_detail.id_penjualan_detail',
+                    DB::raw("(SELECT SUM(pembelian_detail.jumlah) FROM pembelian_detail pembelian_detail WHERE pembelian_detail.id_produk = produk.id_produk) as total_jumlah_pembelian"),
+                    DB::raw("(SELECT SUM(penjualan_detail.jumlah) FROM penjualan_detail penjualan_detail WHERE penjualan_detail.id_produk = produk.id_produk) as total_jumlah"),
+                    'users.name'
+                )
+                ->where('produk.id_kategori', 13)
                 ->whereBetween('produk.updated_at', [$awal, $akhir])
                 ->groupBy('produk.id_produk')
                 ->get();

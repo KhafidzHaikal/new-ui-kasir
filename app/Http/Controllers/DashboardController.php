@@ -22,6 +22,8 @@ class DashboardController extends Controller
             $produk = Produk::where('id_kategori', 4)->count();
         } elseif (auth()->user()->level == 5) {
             $produk = Produk::where('id_kategori', 5)->count();
+        } elseif (auth()->user()->level == 8) {
+            $produk = Produk::where('id_kategori', 13)->count();
         } elseif (auth()->user()->level == 1) {
             $produk = Produk::count();
 

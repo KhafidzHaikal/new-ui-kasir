@@ -18,6 +18,8 @@ use App\Http\Controllers\BackupProdukController;
 use App\Http\Controllers\JasaController;
 use App\Http\Controllers\PembelianDetailController;
 use App\Http\Controllers\PenjualanDetailController;
+use App\Http\Controllers\SimpananController;
+use App\Http\Controllers\SimpananIndukController;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -45,8 +47,9 @@ Route::group(['middleware' => 'auth'], function () {
     // 5 Fotocopy
     // 6 Kasir
     // 7 SHU
+    // 8 FC Dinas
 
-    Route::group(['middleware' => 'level:1,2,4,5,6'], function () {
+    Route::group(['middleware' => 'level:1,2,4,5,6, 8'], function () {
         Route::get('/member/data', [MemberController::class, 'data'])->name('member.data');
         Route::post('/member/cetak-member', [MemberController::class, 'cetakMember'])->name('member.cetak_member');
         Route::resource('/member', MemberController::class);
@@ -69,10 +72,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/transaksi-jasa/{id}', [JasaController::class, 'nota'])->name('transaksi.jasa');
     });
 
-    Route::group(['middleware' => 'level:1,2,3,4,5'], function () {
+    Route::group(['middleware' => 'level:1'], function() {
         Route::get('/kategori/data', [KategoriController::class, 'data'])->name('kategori.data');
         Route::resource('/kategori', KategoriController::class);
+    });
 
+    Route::group(['middleware' => 'level:1,2,3,4,5,8'], function () {
         Route::get('/pembelian/data', [PembelianController::class, 'data'])->name('pembelian.data');
 
         Route::get('/pembelian/selesai', [PembelianController::class, 'selesai'])->name('pembelian.selesai');
@@ -95,7 +100,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/supplier', SupplierController::class);
     });
 
-    Route::group(['middleware' => 'level:1,2,3,4,5,6'], function () {
+    Route::group(['middleware' => 'level:1,2,3,4,5,6,8'], function () {
         Route::get('/produk/data', [ProdukController::class, 'data'])->name('produk.data');
         Route::post('/produk/delete-selected', [ProdukController::class, 'deleteSelected'])->name('produk.delete_selected');
         Route::post('/produk/cetak-barcode', [ProdukController::class, 'cetakBarcode'])->name('produk.cetak_barcode');
@@ -103,7 +108,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/produk', ProdukController::class);
     });
 
-    Route::group(['middleware' => 'level:1,2,4,5,6'], function () {
+    Route::group(['middleware' => 'level:1,2,4,5,6,8'], function () {
 
         Route::get('/transaksi/baru', [PenjualanController::class, 'create'])->name('transaksi.baru');
         Route::post('/transaksi/simpan', [PenjualanController::class, 'store'])->name('transaksi.simpan');
@@ -125,12 +130,25 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/transaksi/search', [PenjualanDetailController::class, 'search'])->name('search');
     });
 
-    Route::group(['middleware' => 'level:1,2,4,5,7'], function () {
+    Route::group(['middleware' => 'level:1,2,4,5,7,8'], function () {
         Route::get('/user/data', [UserController::class, 'data'])->name('user.data');
         Route::resource('/user', UserController::class);
     });
+
+    Route::group(['middleware' => 'level:1,7'], function () {
+        Route::get('/simpanan/data', [SimpananController::class, 'data'])->name('simpanan.data');
+        Route::resource('simpanan', SimpananController::class);
+        Route::get('/transaksi-simpanan', [SimpananController::class, 'transaksi'])->name('simpanan.transaksi');
+        Route::get('/transaksi-simpanan/selesai', [SimpananController::class, 'selesai'])->name('simpanan.selesai');
+        Route::get('/transaksi-simpanan/loadform/{pokok}/{wajib}/{manasuka}', [SimpananController::class, 'loadForm'])->name('simpanan.load_form');
+
+        Route::get('simpanan/simpanan-induk', [SimpananIndukController::class, 'index'])->name('simpanan_induk.index');
+        Route::post('simpanan/simpanan-induk', [SimpananIndukController::class, 'store'])->name('simpanan_induk.store');
+        Route::get('simpanan/simpanan-induk/data', [SimpananIndukController::class, 'data'])->name('simpanan_induk.data');
+
+    });
     
-    Route::group(['middleware' => 'level:1,2,4,5'], function () {
+    Route::group(['middleware' => 'level:1,2,4,5,8'], function () {
         Route::post('/produk/backup', [BackupProdukController::class, 'store'])->name('produk.backup_data');
 
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');

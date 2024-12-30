@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Produk;
 use App\Models\Kategori;
 use App\Models\Member;
+use App\Models\simpanan_induk;
 use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
@@ -38,6 +39,11 @@ class DatabaseSeeder extends Seeder
         Kategori::create([
             'id_kategori' => 5,
             'nama_kategori' => "ATK",
+        ]);
+
+        Kategori::create([
+            'id_kategori' => 13,
+            'nama_kategori' => "ATK Dinas",
         ]);
 
         Produk::create([
@@ -115,6 +121,12 @@ class DatabaseSeeder extends Seeder
             'tanggal_expire' => now()->addDays(14),
             'created_at' => date(now()),
             'updated_at' => date(now())
+        ]);
+
+        simpanan_induk::create([
+            'id' => '1',
+            'nama' => 'Pokok',
+            'nominal' => 500000
         ]);
 
         // Produk::create([
@@ -206,6 +218,8 @@ class DatabaseSeeder extends Seeder
             'nama' => 'Haikal', 
             'alamat' => 'Bulak',
             'telepon' => '00121927121',
+            'gaji' => 100000000,
+            'simpanan_pokok' => 200000,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

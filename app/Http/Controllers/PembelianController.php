@@ -31,6 +31,11 @@ class PembelianController extends Controller
                 ->where('users.level', 5)
                 ->orderBy('id_pembelian', 'desc')
                 ->get();
+        } elseif (auth()->user()->level == 8) {
+            $pembelian = Pembelian::join('users', 'id_user', '=', 'users.id')
+                ->where('users.level', 8)
+                ->orderBy('id_pembelian', 'desc')
+                ->get();
         } else {
             $pembelian = Pembelian::orderBy('id_pembelian', 'desc')->get();
         }
@@ -184,6 +189,14 @@ class PembelianController extends Controller
         } elseif (auth()->user()->level == 5) {
             $pembelian = PembelianDetail::leftJoin('produk', 'pembelian_detail.id_produk', '=', 'produk.id_produk')
                 ->where('produk.id_kategori', 5)
+                ->join('pembelian', 'pembelian_detail.id_pembelian', '=', 'pembelian.id_pembelian')
+                ->select('pembelian_detail.*', 'pembelian.id_supplier', 'produk.nama_produk', 'produk.harga_beli')
+                ->whereBetween('pembelian_detail.created_at', [$awal, $akhir])
+                ->orderBy('pembelian_detail.created_at', 'asc')
+                ->get();
+        } elseif (auth()->user()->level == 8) {
+            $pembelian = PembelianDetail::leftJoin('produk', 'pembelian_detail.id_produk', '=', 'produk.id_produk')
+                ->where('produk.id_kategori', 13)
                 ->join('pembelian', 'pembelian_detail.id_pembelian', '=', 'pembelian.id_pembelian')
                 ->select('pembelian_detail.*', 'pembelian.id_supplier', 'produk.nama_produk', 'produk.harga_beli')
                 ->whereBetween('pembelian_detail.created_at', [$awal, $akhir])

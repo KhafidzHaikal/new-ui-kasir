@@ -67,13 +67,27 @@
                         <i class="fa fa-file-pdf-o"></i> <span>Laporan Kasir</span>
                     </a>
                 </li>
-            @else
-                <li class="header">MASTER</li>
+            @elseif (auth()->user()->level == 7)
+                <li class="header">USP</li>
                 <li>
-                    <a href="{{ route('kategori.index') }}">
-                        <i class="fa fa-cube"></i> <span>Kategori</span>
+                    <a href="{{ route('simpanan.index') }}">
+                        <i class="fa fa-cubes"></i> <span>Simpanan</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('simpanan.create') }}">
+                        <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Simpanan</span>
+                    </a>
+                </li>
+            @else
+                <li class="header">MASTER</li>
+                @if (auth()->user()->level == 1)
+                    <li>
+                        <a href="{{ route('kategori.index') }}">
+                            <i class="fa fa-cube"></i> <span>Kategori</span>
+                        </a>
+                    </li>
+                @endif
                 <li>
                     <a href="{{ route('produk.index') }}">
                         <i class="fa fa-cubes"></i> <span>Produk</span>

@@ -57,6 +57,20 @@ class UserTableSeeder extends Seeder
                 'foto' => '',
                 'level' => 6
             ],
+            [
+                'name' => 'USP Admin',
+                'email' => 'usp@gmail.com',
+                'password' => bcrypt('123'),
+                'foto' => '',
+                'level' => 7
+            ],
+            [
+                'name' => 'FC Dinas',
+                'email' => 'dinas@gmail.com',
+                'password' => bcrypt('123'),
+                'foto' => '',
+                'level' => 8
+            ],
         );
 
         array_map(function (array $user) {

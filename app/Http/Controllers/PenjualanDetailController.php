@@ -18,6 +18,8 @@ class PenjualanDetailController extends Controller
             $produk = Produk::orderBy('nama_produk')->where([['id_kategori', 4], ['stok', '>=', 1]])->get();
         } elseif (auth()->user()->level == 5) {
             $produk = Produk::orderBy('nama_produk')->where([['id_kategori', 5], ['stok', '>=', 1]])->get();
+        } elseif (auth()->user()->level == 8) {
+            $produk = Produk::orderBy('nama_produk')->where([['id_kategori', 13], ['stok', '>=', 1]])->get();
         } elseif (auth()->user()->level == 1) {
             $produk = Produk::orderBy('nama_produk')->where('stok', '>=', 1)->get();
         } else {
