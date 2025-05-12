@@ -72,12 +72,12 @@ class ProdukController extends Controller
             $backupDate = Carbon::parse($backup->created_at);
 
             if ($backupDate->month == $now->month) {
-                $buttonClass = 'disabled';
+                // $buttonClass = 'disabled';
                 break;
             }
         }
 
-        $buttonAttributes = $buttonClass ? " disabled" : "";
+        $buttonAttributes = $buttonClass ? " " : "";
 
         if (auth()->user()->level == 4) {
             $stok = Produk::where('id_kategori', 4)

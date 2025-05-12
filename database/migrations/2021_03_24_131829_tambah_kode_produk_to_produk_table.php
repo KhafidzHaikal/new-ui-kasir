@@ -16,7 +16,8 @@ class TambahKodeProdukToProdukTable extends Migration
         Schema::table('produk', function (Blueprint $table) {
             $table->string('kode_produk')
                   ->unique()
-                  ->after('id_kategori');
+                  ->after('id_kategori')
+                  ->nullable();
         });
     }
 

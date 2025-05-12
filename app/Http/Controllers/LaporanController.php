@@ -358,13 +358,10 @@ class LaporanController extends Controller
                     'backup_produks.nama_produk',
                     'backup_produks.satuan',
                     'backup_produks.harga_beli',
-                    // 'backup_produks.stok_belanja',
-                    // DB::raw("(select stok_awal from backup_produks as bp where bp.id_produk = backup_produks.id_produk and bp.created_at >= '$tanggal_awal' and bp.created_at <= '$tanggal_akhir' order by created_at desc limit 1) as stok_awal"),
                     DB::raw("(select stok_awal from backup_produks as bp where bp.id_produk = backup_produks.id_produk and bp.created_at >= '$tanggal_awal' order by created_at asc limit 1) as stok_awal"),
                     DB::raw("(select stok_akhir from backup_produks as bp where bp.id_produk = backup_produks.id_produk and bp.created_at <= '$tanggal_akhir' order by created_at desc limit 1) as stok_akhir"),
                     DB::raw("(select stok_belanja from backup_produks as bp where bp.id_produk = backup_produks.id_produk and bp.created_at <= '$tanggal_akhir' order by created_at desc limit 1) as stok_belanja"),
                     DB::raw("(SELECT SUM(jumlah) FROM pembelian_detail pembelian_detail WHERE pembelian_detail.id_produk = produk.id_produk and pembelian_detail.created_at between '" . $tanggal_awal . "' and '" . $tanggal_akhir . "' ) as total_jumlah_pembelian"),
-                    // DB::raw("(select jumlah from pembelian_detail where pembelian_detail.id_produk = backup_produks.id_produk and pembelian_detail.created_at <= '$tanggal_akhir' order by created_at desc limit 1) as stok_belanja"),
                 )
                 ->groupBy('backup_produks.id_produk')
                 ->get();
