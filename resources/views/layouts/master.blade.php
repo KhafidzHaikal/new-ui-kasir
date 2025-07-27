@@ -94,14 +94,14 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1 class="page-title-@yield('page-identifier', 'default')">
+            <section class="content-header" style="width: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <h1 class="page-title-@yield('page-identifier', 'default')" style="margin: 0; font-weight: 600; font-size: 24px;">
                     @yield('title')
                 </h1>
-                <div class="page-identifier">@yield('page-identifier', 'PAGE')</div>
-                <ol class="breadcrumb">
+                <div class="page-identifier" style="font-size: 12px; opacity: 0.8; margin-top: 5px;">@yield('page-identifier', 'PAGE')</div>
+                <ol class="breadcrumb" style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 8px 15px; margin-top: 10px;">
                     @section('breadcrumb')
-                        <li><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="{{ url('/') }}" style="color: rgba(255,255,255,0.9);"><i class="fa fa-dashboard"></i> Home</a></li>
                     @show
                 </ol>
             </section>

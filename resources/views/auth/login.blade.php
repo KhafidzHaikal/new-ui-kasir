@@ -363,7 +363,6 @@
             </div>
 
             <button type="submit" class="login-btn" id="loginButton">
-                <div class="loading"></div>
                 <span class="btn-text">Masuk</span>
             </button>
         </form>
@@ -403,29 +402,10 @@
         // Add loading animation on form submit
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             const button = document.getElementById('loginButton');
-            const buttonText = button.querySelector('.btn-text');
             
-            // Validate form before showing loading
-            const email = document.querySelector('input[name="email"]').value.trim();
-            const password = document.querySelector('input[name="password"]').value.trim();
-            
-            if (!email || !password) {
-                return; // Let default validation handle this
-            }
-            
-            // Show loading state
-            button.classList.add('loading');
-            buttonText.textContent = 'Memproses...';
+            // Show loading spinner
+            button.innerHTML = '<div style="width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top:2px solid #fff;border-radius:50%;animation:spin 1s linear infinite;"></div>';
             button.disabled = true;
-            
-            // Prevent double submission
-            setTimeout(() => {
-                if (button.classList.contains('loading')) {
-                    button.classList.remove('loading');
-                    buttonText.textContent = 'Masuk';
-                    button.disabled = false;
-                }
-            }, 10000); // Reset after 10 seconds if no response
         });
 
         // Add input validation feedback

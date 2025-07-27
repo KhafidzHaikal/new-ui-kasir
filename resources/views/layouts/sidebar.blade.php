@@ -1,7 +1,7 @@
 <!-- Mobile Toggle Button -->
-<button class="mobile-toggle" id="mobileToggle">
+{{-- <button class="mobile-toggle" id="mobileToggle">
     <i class="fa fa-bars"></i>
-</button>
+</button> --}}
 
 <!-- Sidebar Overlay for Mobile -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -9,14 +9,14 @@
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar" id="mainSidebar">
     <!-- Close button for mobile -->
-    <button class="sidebar-close" id="sidebarClose">
+    <button class="sidebar-close" id="sidebarClose" style="right: -225px">
         <i class="fa fa-times"></i>
     </button>
     
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
         <!-- Sidebar user panel -->
-        <div class="user-panel">
+        <div class="user-panel" style="margin-top: 2rem">
             <div class="pull-left image">
                 <img src="{{ url(auth()->user()->foto ?? asset('img/user.jpg')) }}" class="img-circle img-profil" alt="User Image">
             </div>

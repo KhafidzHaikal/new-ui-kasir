@@ -14,9 +14,15 @@
         <span class="logo-lg"><b>{{ $setting->nama_perusahaan }}</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
+    {{-- <nav class="navbar navbar-static-top" style="display: flex; justify-content: space-between; align-items: center;"> --}}
     <nav class="navbar navbar-static-top">
         <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle desktop-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        
+        <!-- Mobile toggle button -->
+        <a href="#" id="mobileToggle" class="sidebar-toggle" data-toggle="push-menu" role="button" style="display: none;">
             <span class="sr-only">Toggle navigation</span>
         </a>
 
@@ -59,3 +65,14 @@
 <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
     @csrf
 </form>
+
+<style>
+@media (max-width: 767px) {
+    .desktop-toggle { display: none !important; }
+    #mobileToggle { display: block !important; }
+}
+
+@media (min-width: 768px) {
+    #mobileToggle { display: none !important; }
+}
+</style>
