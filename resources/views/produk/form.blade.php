@@ -12,7 +12,9 @@
                     <h4 class="modal-title"></h4>
                 </div>
                 <div class="modal-body">
-                    <div id="reader" width="250px"></div>
+                    <div class="form-group row">
+                        <div id="reader" width="250px"></div>
+                    </div>
                     <div class="form-group row">
                         <label for="kode_produk" class="col-lg-2 col-lg-offset-1 control-label">Kode Produk</label>
                         <div class="col-lg-6">

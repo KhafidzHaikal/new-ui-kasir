@@ -1,0 +1,423 @@
+/* Universal Alert Styles - Consistent Design for All Pages */
+
+/* Enhanced Popup Styling */
+.swal2-popup-modern {
+    border-radius: 15px !important;
+    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.25) !important;
+    border: none !important;
+    padding: 30px !important;
+    font-family: 'Poppins', sans-serif !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.swal2-popup-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    z-index: 1;
+}
+
+.swal2-popup-loading {
+    border-radius: 15px !important;
+    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.25) !important;
+    border: none !important;
+    padding: 30px !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+/* Enhanced Title Styling */
+.swal2-popup-modern .swal2-title {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 22px !important;
+    color: #333 !important;
+    margin-bottom: 20px !important;
+    text-align: center !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+/* Enhanced Content Styling */
+.swal2-popup-modern .swal2-html-container {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 15px !important;
+    color: #666 !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+/* Enhanced Button Styling */
+.swal2-confirm-delete {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 12px 25px !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    min-width: 120px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.swal2-confirm-delete::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.swal2-confirm-delete:hover::before {
+    left: 100%;
+}
+
+.swal2-confirm-delete:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4) !important;
+    background: linear-gradient(135deg, #f66356 0%, #e53935 100%) !important;
+}
+
+.swal2-confirm-success {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 12px 25px !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    min-width: 120px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.swal2-confirm-success::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.swal2-confirm-success:hover::before {
+    left: 100%;
+}
+
+.swal2-confirm-success:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4) !important;
+    background: linear-gradient(135deg, #66BB6A 0%, #4CAF50 100%) !important;
+}
+
+.swal2-confirm-warning {
+    background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 12px 25px !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    min-width: 120px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.swal2-confirm-warning::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.swal2-confirm-warning:hover::before {
+    left: 100%;
+}
+
+.swal2-confirm-warning:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4) !important;
+    background: linear-gradient(135deg, #FFB74D 0%, #FB8C00 100%) !important;
+}
+
+.swal2-confirm-error {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 12px 25px !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    min-width: 120px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.swal2-confirm-error:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4) !important;
+    background: linear-gradient(135deg, #f66356 0%, #e53935 100%) !important;
+}
+
+.swal2-confirm-info {
+    background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 12px 25px !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    min-width: 120px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.swal2-confirm-info:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4) !important;
+    background: linear-gradient(135deg, #42A5F5 0%, #1E88E5 100%) !important;
+}
+
+.swal2-confirm-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 12px 25px !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    min-width: 120px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.swal2-confirm-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.swal2-confirm-primary:hover::before {
+    left: 100%;
+}
+
+.swal2-confirm-primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+    background: linear-gradient(135deg, #7c8df0 0%, #8557a8 100%) !important;
+}
+
+.swal2-cancel-modern {
+    background: white !important;
+    color: #666 !important;
+    border: 2px solid #e1e5e9 !important;
+    border-radius: 10px !important;
+    padding: 12px 25px !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    min-width: 120px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.swal2-cancel-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.05), transparent);
+    transition: left 0.5s ease;
+}
+
+.swal2-cancel-modern:hover::before {
+    left: 100%;
+}
+
+.swal2-cancel-modern:hover {
+    background: #f8f9fa !important;
+    color: #495057 !important;
+    border-color: #667eea !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Toast Styling */
+.swal2-toast-success {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%) !important;
+    color: white !important;
+}
+
+.swal2-toast-error {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%) !important;
+    color: white !important;
+}
+
+.swal2-toast-warning {
+    background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%) !important;
+    color: white !important;
+}
+
+.swal2-toast-info {
+    background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%) !important;
+    color: white !important;
+}
+
+.swal2-toast-title {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+}
+
+/* Actions Container */
+.swal2-actions {
+    margin-top: 30px !important;
+    gap: 15px !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .swal2-popup-modern {
+        margin: 10px !important;
+        padding: 25px !important;
+    }
+    
+    .swal2-popup-modern .swal2-title {
+        font-size: 20px !important;
+    }
+    
+    .swal2-popup-modern .swal2-html-container {
+        font-size: 14px !important;
+    }
+    
+    .swal2-confirm-delete,
+    .swal2-confirm-success,
+    .swal2-confirm-warning,
+    .swal2-confirm-error,
+    .swal2-confirm-info,
+    .swal2-confirm-primary,
+    .swal2-cancel-modern {
+        padding: 10px 20px !important;
+        font-size: 14px !important;
+        min-width: 100px !important;
+    }
+    
+    .swal2-actions {
+        gap: 10px !important;
+        margin-top: 25px !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .swal2-popup-modern {
+        border: 2px solid #000 !important;
+    }
+    
+    .swal2-confirm-delete,
+    .swal2-confirm-success,
+    .swal2-confirm-warning,
+    .swal2-confirm-error,
+    .swal2-confirm-info,
+    .swal2-confirm-primary {
+        border: 2px solid #000 !important;
+    }
+    
+    .swal2-cancel-modern {
+        border: 2px solid #000 !important;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .swal2-confirm-delete,
+    .swal2-confirm-success,
+    .swal2-confirm-warning,
+    .swal2-confirm-error,
+    .swal2-confirm-info,
+    .swal2-confirm-primary,
+    .swal2-cancel-modern {
+        transition: none !important;
+    }
+    
+    .swal2-confirm-delete::before,
+    .swal2-confirm-success::before,
+    .swal2-confirm-warning::before,
+    .swal2-confirm-primary::before,
+    .swal2-cancel-modern::before {
+        display: none !important;
+    }
+    
+    .loading-spinner {
+        animation: none !important;
+    }
+}

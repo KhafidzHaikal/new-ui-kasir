@@ -164,19 +164,36 @@
         }
 
         function deleteData(url) {
-            if (confirm('Yakin ingin menghapus data terpilih?')) {
-                $.post(url, {
-                        '_token': $('[name=csrf-token]').attr('content'),
-                        '_method': 'delete'
-                    })
-                    .done((response) => {
-                        table.ajax.reload(() => loadForm($('#diskon').val()));
-                    })
-                    .fail((errors) => {
-                        alert('Tidak dapat menghapus data');
-                        return;
-                    });
-            }
+            Swal.fire({
+                title: 'Hapus Transaksi Simpanan',
+                text: 'Yakin ingin menghapus transaksi simpanan ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                reverseButtons: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post(url, {
+                            '_token': $('[name=csrf-token]').attr('content'),
+                            '_method': 'delete'
+                        })
+                        .done((response) => {
+                            showDeleteSuccess('Transaksi simpanan berhasil dihapus!');
+                            table.ajax.reload(() => loadForm($('#diskon').val()));
+                        })
+                        .fail((errors) => {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Tidak dapat menghapus transaksi simpanan',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        });
+                }
+            });
         }
 
         const bayarPokokInput = document.getElementById('bayar_pokok');

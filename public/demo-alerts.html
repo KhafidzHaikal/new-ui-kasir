@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Modern Alerts - Aplikasi Kasir Koperasi</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/sidebar-responsive.css">
+    <link rel="stylesheet" href="css/sidebar-override.css">
+    <link rel="stylesheet" href="css/sidebar-animations.css">
+    <link rel="stylesheet" href="css/navbar-responsive.css">
+    <link rel="stylesheet" href="css/table-modern.css">
+    <link rel="stylesheet" href="css/page-title.css">
+    <link rel="stylesheet" href="css/alert-modern.css">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+        }
+        
+        .demo-content {
+            margin-left: 250px;
+            margin-top: 50px;
+            transition: margin-left 0.2s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-content {
+                margin-left: 0;
+                margin-top: 50px;
+            }
+        }
+        
+        .sidebar-collapse .demo-content {
+            margin-left: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar-collapse .demo-content {
+                margin-left: 0;
+            }
+        }
+        
+        .demo-box {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .alert-demo-item {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            padding: 20px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        
+        .alert-demo-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+        
+        .alert-demo-item h4 {
+            margin: 0 0 10px 0;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .alert-demo-item p {
+            margin: 0 0 15px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .demo-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+            width: 100%;
+        }
+        
+        .demo-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            background: linear-gradient(135deg, #7c8df0 0%, #8557a8 100%);
+        }
+        
+        .demo-btn.btn-warning {
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+        }
+        
+        .demo-btn.btn-warning:hover {
+            background: linear-gradient(135deg, #FFB74D 0%, #FB8C00 100%);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+        }
+        
+        .demo-btn.btn-danger {
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+        }
+        
+        .demo-btn.btn-danger:hover {
+            background: linear-gradient(135deg, #f66356 0%, #e53935 100%);
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+        }
+        
+        .demo-btn.btn-success {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+        }
+        
+        .demo-btn.btn-success:hover {
+            background: linear-gradient(135deg, #66BB6A 0%, #4CAF50 100%);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+        }
+        
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .feature-item {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            padding: 20px;
+        }
+        
+        .feature-item h4 {
+            color: #333;
+            margin: 0 0 10px 0;
+            font-weight: 600;
+        }
+        
+        .feature-item ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .feature-item li {
+            margin: 5px 0;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="hold-transition skin-purple-light sidebar-mini">
+    <!-- Header/Navbar -->
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="#" class="logo">
+            <span class="logo-mini">AK</span>
+            <span class="logo-lg"><b>Aplikasi Kasir Koperasi</b></span>
+        </a>
+        
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle desktop-toggle" data-toggle="push-menu" role="button" onclick="toggleSidebarCollapse()">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account Menu -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span>Demo User</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="img/user.jpg" class="img-circle" alt="User Image" style="width: 90px; height: 90px; object-fit: cover;">
+                                <p>
+                                    Demo User - demo@example.com
+                                </p>
+                            </li>
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Profil</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-default btn-flat">Keluar</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Toggle Button -->
+    <button class="mobile-toggle" id="mobileToggle">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="main-sidebar" id="mainSidebar">
+        <!-- Close button for mobile -->
+        <button class="sidebar-close" id="sidebarClose">
+            <i class="fa fa-times"></i>
+        </button>
+        
+        <section class="sidebar">
+            <!-- User panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="img/user.jpg" class="img-circle img-profil" alt="User Image" style="width: 45px; height: 45px; object-fit: cover;">
+                </div>
+                <div class="pull-left info">
+                    <p>Demo User</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+
+            <!-- Sidebar menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="active">
+                    <a href="#dashboard">
+                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+                
+                <li class="header">MASTER</li>
+                <li>
+                    <a href="#kategori">
+                        <i class="fa fa-cube"></i> <span>Kategori</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#produk">
+                        <i class="fa fa-cubes"></i> <span>Produk</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#member">
+                        <i class="fa fa-id-card"></i> <span>Member</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#supplier">
+                        <i class="fa fa-truck"></i> <span>Supplier</span>
+                    </a>
+                </li>
+                
+                <li class="header">TRANSAKSI</li>
+                <li>
+                    <a href="#pengeluaran">
+                        <i class="fa fa-money"></i> <span>Pengeluaran</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#pembelian">
+                        <i class="fa fa-download"></i> <span>Pembelian</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#penjualan">
+                        <i class="fa fa-upload"></i> <span>Penjualan</span>
+                    </a>
+                </li>
+                
+                <li class="header">SYSTEM</li>
+                <li>
+                    <a href="#user">
+                        <i class="fa fa-users"></i> <span>User</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#setting">
+                        <i class="fa fa-cogs"></i> <span>Pengaturan</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="demo-content">
+        <!-- Content Header -->
+        <section class="content-header">
+            <h1 class="page-title-dashboard">
+                Demo Modern Alerts
+            </h1>
+            <div class="page-identifier">ALERTS</div>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Demo Alerts</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="demo-box">
+                <h2>🚨 Modern Alert System</h2>
+                <p>Alert system yang telah diperbaiki dengan warna referensi yang konsisten dan design modern.</p>
+            </div>
+
+            <div class="alert-demo-grid">
+                <div class="alert-demo-item">
+                    <h4>✅ Success Alert</h4>
+                    <p>Alert untuk notifikasi berhasil</p>
+                    <button class="demo-btn btn-success" onclick="showSuccessDemo()">
+                        Test Success Alert
+                    </button>
+                </div>
+
+                <div class="alert-demo-item">
+                    <h4>⚠️ Warning Alert</h4>
+                    <p>Alert untuk peringatan kadaluarsa</p>
+                    <button class="demo-btn btn-warning" onclick="showWarningDemo()">
+                        Test Warning Alert
+                    </button>
+                </div>
+
+                <div class="alert-demo-item">
+                    <h4>❌ Error Alert</h4>
+                    <p>Alert untuk notifikasi error</p>
+                    <button class="demo-btn btn-danger" onclick="showErrorDemo()">
+                        Test Error Alert
+                    </button>
+                </div>
+
+                <div class="alert-demo-item">
+                    <h4>ℹ️ Info Alert</h4>
+                    <p>Alert untuk informasi umum</p>
+                    <button class="demo-btn" onclick="showInfoDemo()">
+                        Test Info Alert
+                    </button>
+                </div>
+
+                <div class="alert-demo-item">
+                    <h4>🗑️ Delete Confirmation</h4>
+                    <p>Konfirmasi untuk menghapus data</p>
+                    <button class="demo-btn btn-danger" onclick="showDeleteDemo()">
+                        Test Delete Confirm
+                    </button>
+                </div>
+
+                <div class="alert-demo-item">
+                    <h4>❓ General Confirmation</h4>
+                    <p>Konfirmasi umum untuk aksi</p>
+                    <button class="demo-btn" onclick="showConfirmDemo()">
+                        Test Confirmation
+                    </button>
+                </div>
+
+                <div class="alert-demo-item">
+                    <h4>📅 Expired Products</h4>
+                    <p>Peringatan produk kadaluarsa</p>
+                    <button class="demo-btn btn-warning" onclick="showExpiredDemo()">
+                        Test Expired Warning
+                    </button>
+                </div>
+
+                <div class="alert-demo-item">
+                    <h4>🍞 Toast Notifications</h4>
+                    <p>Notifikasi toast modern</p>
+                    <button class="demo-btn" onclick="showToastDemo()">
+                        Test Toast Alerts
+                    </button>
+                </div>
+            </div>
+
+            <div class="features-list">
+                <div class="feature-item">
+                    <h4>🎨 Visual Improvements</h4>
+                    <ul>
+                        <li>Gradient background dengan warna referensi</li>
+                        <li>Font Poppins untuk konsistensi</li>
+                        <li>Border radius dan shadow modern</li>
+                        <li>Hover effects yang smooth</li>
+                        <li>Responsive design untuk mobile</li>
+                    </ul>
+                </div>
+
+                <div class="feature-item">
+                    <h4>🔧 Technical Features</h4>
+                    <ul>
+                        <li>SweetAlert2 integration</li>
+                        <li>Custom toast notifications</li>
+                        <li>Auto-close functionality</li>
+                        <li>Progress bar animations</li>
+                        <li>Keyboard navigation support</li>
+                    </ul>
+                </div>
+
+                <div class="feature-item">
+                    <h4>📱 Responsive Design</h4>
+                    <ul>
+                        <li>Mobile-optimized layouts</li>
+                        <li>Touch-friendly buttons</li>
+                        <li>Adaptive font sizes</li>
+                        <li>Cross-browser compatibility</li>
+                        <li>High contrast mode support</li>
+                    </ul>
+                </div>
+
+                <div class="feature-item">
+                    <h4>🎯 Use Cases</h4>
+                    <ul>
+                        <li>Produk kadaluarsa warnings</li>
+                        <li>Delete confirmations</li>
+                        <li>Success notifications</li>
+                        <li>Error handling</li>
+                        <li>General confirmations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="demo-box">
+                <h3>📋 Implementation Examples</h3>
+                <h4>JavaScript Usage:</h4>
+                <pre style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-size: 13px;"><code>// Success Alert
+showSuccessAlert('Berhasil!', 'Data telah disimpan');
+
+// Warning Alert (Kadaluarsa)
+showExpiredWarning(5, expiredProducts);
+
+// Delete Confirmation
+confirmDelete('Hapus Produk?', 'Data produk akan dihapus permanen')
+  .then((result) => {
+    if (result.isConfirmed) {
+      // Lakukan penghapusan
+    }
+  });
+
+// Toast Notification
+showToast('success', 'Berhasil', 'Data telah diupdate', 3000);</code></pre>
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.32/sweetalert2.min.js"></script>
+    <script src="js/sidebar-responsive.js"></script>
+    <script src="js/alert-modern.js"></script>
+    
+    <script>
+        // Desktop sidebar collapse functionality
+        function toggleSidebarCollapse() {
+            document.body.classList.toggle('sidebar-collapse');
+        }
+        
+        // Demo Functions
+        function showSuccessDemo() {
+            showSuccessAlert('Berhasil!', 'Data telah berhasil disimpan ke database');
+        }
+        
+        function showWarningDemo() {
+            showWarningAlert(
+                '⚠️ Peringatan Stok',
+                'Stok produk "Beras Premium 5kg" hampir habis. Sisa stok: 5 unit'
+            );
+        }
+        
+        function showErrorDemo() {
+            showErrorAlert('Error!', 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.');
+        }
+        
+        function showInfoDemo() {
+            showInfoAlert('Informasi', 'Sistem akan melakukan maintenance pada pukul 02:00 WIB');
+        }
+        
+        function showDeleteDemo() {
+            confirmDelete(
+                'Hapus Produk?',
+                'Produk "Minyak Goreng 2L" akan dihapus permanen dari sistem'
+            ).then((result) => {
+                if (result.isConfirmed) {
+                    showSuccessAlert('Terhapus!', 'Produk telah berhasil dihapus');
+                }
+            });
+        }
+        
+        function showConfirmDemo() {
+            showConfirm(
+                'Konfirmasi Aksi',
+                'Apakah Anda yakin ingin melanjutkan proses ini?'
+            ).then((result) => {
+                if (result.isConfirmed) {
+                    showSuccessAlert('Dikonfirmasi!', 'Proses telah dilanjutkan');
+                } else {
+                    showInfoAlert('Dibatalkan', 'Proses telah dibatalkan');
+                }
+            });
+        }
+        
+        function showExpiredDemo() {
+            const expiredProducts = [
+                { nama_produk: 'Susu UHT 1L', tanggal_expire: '2025-02-01' },
+                { nama_produk: 'Roti Tawar', tanggal_expire: '2025-01-30' },
+                { nama_produk: 'Yogurt Strawberry', tanggal_expire: '2025-01-28' },
+                { nama_produk: 'Keju Slice', tanggal_expire: '2025-02-02' },
+                { nama_produk: 'Mentega', tanggal_expire: '2025-01-31' }
+            ];
+            
+            showExpiredWarning(expiredProducts.length, expiredProducts);
+        }
+        
+        function showToastDemo() {
+            showToast('success', 'Berhasil', 'Data produk telah diupdate', 3000);
+            
+            setTimeout(() => {
+                showToast('warning', 'Peringatan', 'Stok produk hampir habis', 4000);
+            }, 1000);
+            
+            setTimeout(() => {
+                showToast('info', 'Informasi', 'Backup otomatis telah selesai', 3500);
+            }, 2000);
+        }
+
+        // Demo specific code
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show welcome notification
+            setTimeout(() => {
+                showToast('info', 'Demo Ready', 'Alert system telah berhasil diupdate dengan warna referensi!', 4000);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

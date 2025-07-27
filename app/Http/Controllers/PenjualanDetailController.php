@@ -16,10 +16,8 @@ class PenjualanDetailController extends Controller
     {
         if (auth()->user()->level == 4) {
             $produk = Produk::orderBy('nama_produk')->where([['id_kategori', 4], ['stok', '>=', 1]])->get();
-        } elseif (auth()->user()->level == 5) {
+        } elseif (auth()->user()->level == 5 || auth()->user()->level == 8) {
             $produk = Produk::orderBy('nama_produk')->where([['id_kategori', 5], ['stok', '>=', 1]])->get();
-        } elseif (auth()->user()->level == 8) {
-            $produk = Produk::orderBy('nama_produk')->where([['id_kategori', 13], ['stok', '>=', 1]])->get();
         } elseif (auth()->user()->level == 1) {
             $produk = Produk::orderBy('nama_produk')->where('stok', '>=', 1)->get();
         } else {
@@ -42,7 +40,7 @@ class PenjualanDetailController extends Controller
             if (auth()->user()->level == 1) {
                 return redirect()->route('transaksi.baru');
             } else {
-                return redirect()->route('home');
+                return redirect()->route('dashboard');
             }
         }
     }
@@ -89,7 +87,10 @@ class PenjualanDetailController extends Controller
             ->of($data)
             ->addIndexColumn()
             ->rawColumns(['aksi', 'kode_produk', 'jumlah'])
-            ->make(true);
+            ->make(true)
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     public function store(Request $request)
@@ -121,9 +122,18 @@ class PenjualanDetailController extends Controller
     public function destroy($id)
     {
         $detail = PenjualanDetail::find($id);
-        $detail->delete();
-
-        return response(null, 204);
+        if ($detail) {
+            $detail->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil dihapus'
+            ], 200);
+        }
+        
+        return response()->json([
+            'success' => false,
+            'message' => 'Data tidak ditemukan'
+        ], 404);
     }
 
     public function loadForm($diskon = 0, $total = 0, $diterima = 0)
@@ -151,11 +161,15 @@ class PenjualanDetailController extends Controller
 
     public function search(Request $request)
     {
-        $kode_produk = $request->input('kode_produk');
+        $kode_produk = trim($request->input('kode_produk'));
+        
+        if (empty($kode_produk)) {
+            return response()->json(['error' => 'Kode produk tidak boleh kosong'], 400);
+        }
 
         $produk = DB::table('produk')->where('produk.kode_produk', '=', $kode_produk)->first();
         if (!$produk) {
-            return response()->json('Data gagal disimpan', 400);
+            return response()->json(['error' => 'Produk tidak ditemukan'], 400);
         }
 
         $detail = new PenjualanDetail();

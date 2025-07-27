@@ -1,0 +1,354 @@
+/* Navbar Responsive Styles - Consistent with Sidebar */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Main Header */
+.main-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 2px 15px rgba(102, 126, 234, 0.2) !important;
+    backdrop-filter: blur(10px);
+    font-family: 'Poppins', sans-serif !important;
+    transition: all 0.2s ease !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1030 !important;
+}
+
+/* Logo Section - Fix untuk desktop collapse */
+.main-header .logo {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+    font-family: 'Poppins', sans-serif !important;
+    transition: all 0.2s ease !important;
+    backdrop-filter: blur(10px);
+    width: 250px !important;
+    float: left !important;
+    height: 50px !important;
+    line-height: 50px !important;
+    text-align: center !important;
+    overflow: hidden !important;
+}
+
+/* Fix untuk sidebar collapse di desktop */
+.sidebar-collapse .main-header .logo {
+    width: 50px !important;
+}
+
+.sidebar-collapse .main-header .logo .logo-lg {
+    display: none !important;
+}
+
+.sidebar-collapse .main-header .logo .logo-mini {
+    display: block !important;
+}
+
+/* Normal state - show full logo */
+.main-header .logo .logo-mini {
+    display: none !important;
+}
+
+.main-header .logo .logo-lg {
+    display: block !important;
+}
+
+.main-header .logo:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.main-header .logo .logo-mini,
+.main-header .logo .logo-lg {
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+.main-header .logo .logo-lg b {
+    font-weight: 700 !important;
+}
+
+/* Navbar - Fix margin untuk desktop */
+.main-header .navbar {
+    background: transparent !important;
+    margin: 0 !important;
+    margin-left: 250px !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Fix untuk sidebar collapse */
+.sidebar-collapse .main-header .navbar {
+    margin-left: 50px !important;
+}
+
+/* Sidebar Toggle Button - Hide di mobile, show di desktop */
+.main-header .navbar .sidebar-toggle {
+    color: white !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+    margin: 8px !important;
+    transition: all 0.2s ease !important;
+    font-size: 16px !important;
+    display: block !important;
+}
+
+.main-header .navbar .sidebar-toggle:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.main-header .navbar .sidebar-toggle:focus {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* User Menu */
+.main-header .navbar .nav > li > a {
+    color: white !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+    padding: 15px 20px !important;
+    transition: all 0.2s ease !important;
+    border-radius: 8px !important;
+    margin: 8px 4px !important;
+}
+
+.main-header .navbar .nav > li > a:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    transform: translateY(-1px);
+}
+
+.main-header .navbar .nav > li > a:focus {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* User Dropdown */
+.main-header .navbar .user-menu .dropdown-toggle {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 25px !important;
+    padding: 8px 16px !important;
+    font-weight: 500 !important;
+}
+
+.main-header .navbar .user-menu .dropdown-toggle:hover,
+.main-header .navbar .user-menu.open .dropdown-toggle {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Dropdown Menu */
+.main-header .navbar .user-menu .dropdown-menu {
+    background: white !important;
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    margin-top: 8px !important;
+    overflow: hidden !important;
+    backdrop-filter: blur(20px);
+    animation: dropdownSlide 0.2s ease-out;
+}
+
+@keyframes dropdownSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* User Header in Dropdown */
+.main-header .navbar .user-menu .dropdown-menu .user-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    padding: 20px !important;
+    text-align: center !important;
+}
+
+.main-header .navbar .user-menu .dropdown-menu .user-header img {
+    border: 3px solid rgba(255, 255, 255, 0.3) !important;
+    transition: all 0.2s ease !important;
+}
+
+.main-header .navbar .user-menu .dropdown-menu .user-header img:hover {
+    border-color: rgba(255, 255, 255, 0.6) !important;
+    transform: scale(1.05);
+}
+
+.main-header .navbar .user-menu .dropdown-menu .user-header p {
+    color: white !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+    margin-top: 10px !important;
+}
+
+/* User Footer in Dropdown */
+.main-header .navbar .user-menu .dropdown-menu .user-footer {
+    background: #f8f9fa !important;
+    padding: 15px !important;
+}
+
+.main-header .navbar .user-menu .dropdown-menu .user-footer .btn {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+    transition: all 0.2s ease !important;
+    border: 1px solid #dee2e6 !important;
+}
+
+.main-header .navbar .user-menu .dropdown-menu .user-footer .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.main-header .navbar .user-menu .dropdown-menu .user-footer .btn-default {
+    background: white !important;
+    color: #495057 !important;
+}
+
+.main-header .navbar .user-menu .dropdown-menu .user-footer .btn-default:hover {
+    background: #667eea !important;
+    color: white !important;
+    border-color: #667eea !important;
+}
+
+/* Responsive Design - Kembalikan ke sebelumnya */
+@media (max-width: 768px) {
+    .main-header {
+        position: relative !important;
+        z-index: 1030 !important;
+    }
+    
+    .main-header .logo {
+        display: block !important;
+        float: none !important;
+        width: auto !important;
+        text-align: center !important;
+        padding: 12px 15px !important;
+    }
+    
+    .main-header .navbar {
+        margin: 0 !important;
+        margin-left: 0 !important;
+    }
+    
+    .main-header .navbar .sidebar-toggle.desktop-toggle {
+        display: none !important;
+    }
+    
+    .main-header .navbar .nav > li > a {
+        padding: 12px 15px !important;
+        margin: 4px 8px !important;
+    }
+    
+    .main-header .navbar .user-menu .dropdown-toggle {
+        padding: 10px 15px !important;
+        border-radius: 8px !important;
+        margin: 4px 8px !important;
+    }
+    
+    .main-header .navbar .user-menu .dropdown-menu {
+        position: fixed !important;
+        top: auto !important;
+        right: 10px !important;
+        left: 10px !important;
+        width: auto !important;
+        margin-top: 5px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-header .logo .logo-lg {
+        font-size: 16px !important;
+    }
+    
+    .main-header .navbar .user-menu .dropdown-toggle span {
+        display: none !important;
+    }
+    
+    .main-header .navbar .user-menu .dropdown-toggle:after {
+        content: "👤" !important;
+        font-size: 18px !important;
+    }
+}
+
+/* Fix for AdminLTE skin overrides */
+.skin-purple-light .main-header,
+.skin-purple .main-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.skin-purple-light .main-header .logo,
+.skin-purple .main-header .logo {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+}
+
+.skin-purple-light .main-header .navbar .nav > li > a,
+.skin-purple .main-header .navbar .nav > li > a {
+    color: white !important;
+}
+
+/* Smooth transitions for all elements */
+.main-header,
+.main-header .logo,
+.main-header .navbar .sidebar-toggle,
+.main-header .navbar .nav > li > a,
+.main-header .navbar .user-menu .dropdown-toggle,
+.main-header .navbar .user-menu .dropdown-menu {
+    transition: all 0.2s ease !important;
+}
+
+/* Focus styles for accessibility */
+.main-header .logo:focus,
+.main-header .navbar .sidebar-toggle:focus,
+.main-header .navbar .nav > li > a:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.8) !important;
+    outline-offset: 2px !important;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    .main-header,
+    .main-header .logo,
+    .main-header .navbar .sidebar-toggle,
+    .main-header .navbar .nav > li > a,
+    .main-header .navbar .user-menu .dropdown-toggle,
+    .main-header .navbar .user-menu .dropdown-menu {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .main-header {
+        border-bottom: 2px solid white !important;
+    }
+    
+    .main-header .logo,
+    .main-header .navbar .sidebar-toggle,
+    .main-header .navbar .nav > li > a {
+        border: 1px solid white !important;
+    }
+}

@@ -1,0 +1,343 @@
+/* Import Poppins font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Sidebar Responsive Styles */
+.main-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Scrollbar styling */
+.main-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.main-sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.main-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.main-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* User Panel */
+.user-panel {
+    padding: 20px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.user-panel .image {
+    float: left;
+    width: 45px;
+    height: 45px;
+    margin-right: 15px;
+}
+
+.user-panel .image img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.user-panel .image img:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
+}
+
+.user-panel .info {
+    padding: 5px 5px 5px 0;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.user-panel .info p {
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0 0 5px 0;
+    color: white;
+}
+
+.user-panel .info a {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.user-panel .info a:hover {
+    color: white;
+}
+
+.user-panel .info .fa-circle {
+    color: #4CAF50;
+    margin-right: 5px;
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.sidebar-menu .header {
+    padding: 10px 25px 10px 15px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-menu li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar-menu li a {
+    color: rgba(255, 255, 255, 0.9);
+    display: block;
+    padding: 12px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 0 25px 25px 0;
+    margin: 2px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-menu li a:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.sidebar-menu li a:hover:before {
+    width: 100%;
+}
+
+.sidebar-menu li a:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-menu li.active > a {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    border-left: 4px solid white;
+    font-weight: 600;
+}
+
+.sidebar-menu li a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* Mobile Toggle Button - Kembalikan ke posisi sebelumnya */
+.mobile-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1001;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    transition: all 0.2s ease;
+}
+
+.mobile-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+/* Overlay for mobile - Fix display */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.sidebar-overlay.active {
+    display: block !important;
+    opacity: 1;
+}
+
+/* Mobile Responsive - Kembalikan ke sebelumnya */
+@media (max-width: 768px) {
+    .main-sidebar {
+        transform: translateX(-100%);
+        width: 280px;
+    }
+    
+    .main-sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .mobile-toggle {
+        display: block;
+    }
+    
+    .sidebar-overlay.active {
+        display: block !important;
+    }
+    
+    .content-wrapper {
+        margin-left: 0 !important;
+    }
+    
+    .user-panel {
+        padding: 25px 15px;
+    }
+    
+    .user-panel .image {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .user-panel .image img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .sidebar-menu li a {
+        padding: 15px 20px;
+        font-size: 15px;
+    }
+    
+    .sidebar-menu .header {
+        padding: 15px 25px 15px 20px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-sidebar {
+        width: 100%;
+    }
+    
+    .sidebar-menu li a {
+        padding: 18px 25px;
+        font-size: 16px;
+    }
+    
+    .sidebar-menu li a i {
+        margin-right: 15px;
+        font-size: 18px;
+    }
+}
+
+/* Desktop adjustments */
+@media (min-width: 769px) {
+    .content-wrapper {
+        margin-left: 250px;
+    }
+    
+    .main-header {
+        margin-left: 250px;
+    }
+}
+
+/* Animation for menu items */
+.sidebar-menu li {
+    animation: slideInLeft 0.3s ease forwards;
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.sidebar-menu li:nth-child(1) { animation-delay: 0.1s; }
+.sidebar-menu li:nth-child(2) { animation-delay: 0.2s; }
+.sidebar-menu li:nth-child(3) { animation-delay: 0.3s; }
+.sidebar-menu li:nth-child(4) { animation-delay: 0.4s; }
+.sidebar-menu li:nth-child(5) { animation-delay: 0.5s; }
+.sidebar-menu li:nth-child(6) { animation-delay: 0.6s; }
+.sidebar-menu li:nth-child(7) { animation-delay: 0.7s; }
+.sidebar-menu li:nth-child(8) { animation-delay: 0.8s; }
+.sidebar-menu li:nth-child(9) { animation-delay: 0.9s; }
+.sidebar-menu li:nth-child(10) { animation-delay: 1.0s; }
+
+@keyframes slideInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Close button for mobile */
+.sidebar-close {
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sidebar-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+@media (max-width: 768px) {
+    .sidebar-close {
+        display: block;
+    }
+}

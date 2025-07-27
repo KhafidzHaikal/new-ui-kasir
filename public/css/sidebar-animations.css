@@ -1,0 +1,227 @@
+/* Subtle animations and transitions for responsive sidebar */
+
+/* Smooth transitions for all sidebar elements - reduced duration */
+.main-sidebar,
+.sidebar-overlay,
+.content-wrapper,
+.main-header .navbar {
+    transition: all 0.2s ease !important;
+}
+
+/* Sidebar slide animation - more subtle */
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0.8;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutToLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0.8;
+    }
+}
+
+/* Apply animations to sidebar - faster */
+.main-sidebar.active {
+    animation: slideInFromLeft 0.2s ease-out forwards;
+}
+
+/* Overlay fade animation - faster */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.sidebar-overlay.active {
+    animation: fadeIn 0.2s ease-out forwards;
+}
+
+/* Menu items - remove stagger animation, keep simple */
+.sidebar-menu li {
+    opacity: 1;
+    transform: translateX(0);
+    /* Remove stagger animation for subtlety */
+}
+
+/* Subtle hover animations for menu items */
+.sidebar-menu li a {
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-menu li a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+    transition: left 0.3s ease;
+}
+
+.sidebar-menu li a:hover::before {
+    left: 100%;
+}
+
+/* Remove pulse animation for active menu item - too much */
+.sidebar-menu li.active > a {
+    /* Remove pulse animation */
+}
+
+/* Button hover animations - more subtle */
+.mobile-toggle {
+    position: relative;
+    overflow: hidden;
+}
+
+.mobile-toggle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease;
+}
+
+.mobile-toggle:hover::before {
+    width: 60px;
+    height: 60px;
+}
+
+.sidebar-close {
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-close::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s ease, height 0.2s ease;
+}
+
+.sidebar-close:hover::before {
+    width: 40px;
+    height: 40px;
+}
+
+/* User panel animation - more subtle */
+.user-panel {
+    animation: slideInFromTop 0.3s ease-out;
+}
+
+@keyframes slideInFromTop {
+    from {
+        transform: translateY(-10px);
+        opacity: 0.8;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* User image hover effect - reduced */
+.user-panel .image img {
+    transition: all 0.2s ease;
+}
+
+.user-panel .image img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Loading animation for menu items */
+.sidebar-menu a.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.sidebar-menu a.loading i.fa-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive animations - faster on mobile */
+@media (max-width: 768px) {
+    /* Faster animations on mobile */
+    .main-sidebar,
+    .sidebar-overlay {
+        transition-duration: 0.2s !important;
+    }
+    
+    /* Remove menu item animations on mobile */
+    .sidebar-menu li {
+        animation: none;
+    }
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .main-sidebar,
+    .sidebar-overlay,
+    .content-wrapper,
+    .main-header .navbar,
+    .sidebar-menu li,
+    .sidebar-menu li a,
+    .user-panel .image img,
+    .mobile-toggle,
+    .sidebar-close {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Focus styles for accessibility */
+.mobile-toggle:focus,
+.sidebar-close:focus,
+.sidebar-menu a:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.8);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .main-sidebar {
+        border-right: 2px solid white !important;
+    }
+    
+    .sidebar-menu li a {
+        border: 1px solid transparent;
+    }
+    
+    .sidebar-menu li a:hover,
+    .sidebar-menu li a:focus {
+        border-color: white;
+    }
+}

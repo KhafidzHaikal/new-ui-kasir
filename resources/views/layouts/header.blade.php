@@ -16,7 +16,7 @@
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
         <!-- Sidebar toggle button-->
-        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <a href="#" class="sidebar-toggle desktop-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
 
@@ -46,7 +46,7 @@
                             </div>
                             <div class="pull-right">
                                 <a href="#" class="btn btn-default btn-flat"
-                                    onclick="$('#logout-form').submit()">Keluar</a>
+                                    onclick="confirmLogout()">Keluar</a>
                             </div>
                         </li>
                     </ul>

@@ -1,11 +1,24 @@
+<!-- Mobile Toggle Button -->
+<button class="mobile-toggle" id="mobileToggle">
+    <i class="fa fa-bars"></i>
+</button>
+
+<!-- Sidebar Overlay for Mobile -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
 <!-- Left side column. contains the logo and sidebar -->
-<aside class="main-sidebar">
+<aside class="main-sidebar" id="mainSidebar">
+    <!-- Close button for mobile -->
+    <button class="sidebar-close" id="sidebarClose">
+        <i class="fa fa-times"></i>
+    </button>
+    
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ url(auth()->user()->foto ?? '') }}" class="img-circle img-profil" alt="User Image">
+                <img src="{{ url(auth()->user()->foto ?? asset('img/user.jpg')) }}" class="img-circle img-profil" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>{{ auth()->user()->name }}</p>
@@ -13,7 +26,6 @@
             </div>
         </div>
 
-        <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
             <li>
@@ -38,7 +50,7 @@
                         <i class="fa fa-truck"></i> <span>Supplier</span>
                     </a>
                 </li>
-            @elseif (auth()->user()->level == 6)
+            @elseif (auth()->user()->level == 6 || auth()->user()->level == 8)
                 <li class="header">MASTER</li>
                 <li>
                     <a href="{{ route('produk.index') }}">
@@ -57,6 +69,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('transaksi.index') }}">
+                        <i class="fa fa-shopping-cart"></i> <span>Transaksi Aktif</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('transaksi.baru') }}">
                         <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Baru</span>
                     </a>
@@ -71,12 +88,22 @@
                 <li class="header">USP</li>
                 <li>
                     <a href="{{ route('simpanan.index') }}">
-                        <i class="fa fa-cubes"></i> <span>Simpanan</span>
+                        <i class="fa fa-bank"></i> <span>Simpanan</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('simpanan.create') }}">
-                        <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Simpanan</span>
+                        <i class="fa fa-exchange"></i> <span>Transaksi Simpanan</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('pinjaman.index') }}">
+                        <i class="fa fa-credit-card"></i> <span>Pinjaman</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('pengambilan.index') }}">
+                        <i class="fa fa-hand-paper-o"></i> <span>Pengambilan</span>
                     </a>
                 </li>
             @else
@@ -112,7 +139,7 @@
                 @if (auth()->user()->level == 4 || auth()->user()->level == 1)
                     <li>
                         <a href="{{ route('jasa.index') }}">
-                            <i class="fa fa-money"></i> <span>Jasa</span>
+                            <i class="fa fa-handshake-o"></i> <span>Jasa</span>
                         </a>
                     </li>
                 @endif
@@ -126,11 +153,11 @@
                         <i class="fa fa-upload"></i> <span>Penjualan</span>
                     </a>
                 </li>
-                {{-- <li>
-            <a href="{{ route('transaksi.index') }}">
-                <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Aktif</span>
-            </a>
-        </li> --}}
+                <li>
+                    <a href="{{ route('transaksi.index') }}">
+                        <i class="fa fa-shopping-cart"></i> <span>Transaksi Aktif</span>
+                    </a>
+                </li>
                 <li>
                     <a href="{{ route('transaksi.baru') }}">
                         <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Baru</span>
@@ -163,3 +190,6 @@
     </section>
     <!-- /.sidebar -->
 </aside>
+
+<!-- Include responsive sidebar JavaScript -->
+<script src="{{ asset('js/sidebar-responsive.js') }}"></script>

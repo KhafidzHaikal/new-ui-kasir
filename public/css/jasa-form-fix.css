@@ -1,0 +1,178 @@
+/**
+ * Jasa Form Fix CSS - Perbaikan untuk dropdown icon dan form styling
+ * 1. Fix dropdown select dengan terlalu banyak icon
+ * 2. Clean form styling untuk modal jasa
+ */
+
+/* DROPDOWN SELECT FIX - Hilangkan icon berlebih */
+#modal-form select[name="deskripsi"],
+#modal-form .form-control select,
+.modal-form select {
+    /* Reset semua background image */
+    background-image: none !important;
+    
+    /* Gunakan default browser dropdown */
+    -webkit-appearance: menulist !important;
+    -moz-appearance: menulist !important;
+    appearance: menulist !important;
+    
+    /* Reset padding */
+    padding-right: 12px !important;
+    
+    /* Remove custom styling */
+    background-color: white !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+}
+
+/* Hilangkan pseudo-elements yang bisa jadi icon */
+#modal-form select[name="deskripsi"]::-ms-expand,
+#modal-form .form-control select::-ms-expand {
+    display: block !important;
+}
+
+#modal-form select[name="deskripsi"]::after,
+#modal-form select[name="deskripsi"]::before,
+#modal-form .form-control select::after,
+#modal-form .form-control select::before {
+    display: none !important;
+    content: none !important;
+}
+
+/* Focus state untuk select */
+#modal-form select[name="deskripsi"]:focus,
+#modal-form .form-control select:focus {
+    border-color: #667eea !important;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.15) !important;
+    outline: none !important;
+}
+
+/* FORM STYLING IMPROVEMENTS */
+#modal-form .form-group {
+    margin-bottom: 20px !important;
+}
+
+#modal-form .form-control {
+    height: 40px !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    transition: all 0.3s ease !important;
+}
+
+#modal-form .form-control:focus {
+    border-color: #667eea !important;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.15) !important;
+    outline: none !important;
+}
+
+/* BUTTON STYLING */
+#modal-form .modal-footer .btn {
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+    border-radius: 4px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+#modal-form .modal-footer .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
+    color: white !important;
+}
+
+#modal-form .modal-footer .btn-primary:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3) !important;
+}
+
+#modal-form .modal-footer .btn-warning {
+    background: #6c757d !important;
+    border: none !important;
+    color: white !important;
+}
+
+#modal-form .modal-footer .btn-warning:hover {
+    background: #5a6268 !important;
+    transform: translateY(-1px) !important;
+}
+
+/* VALIDATION STYLING */
+#modal-form .form-control.is-valid {
+    border-color: #28a745 !important;
+    background-image: none !important;
+}
+
+#modal-form .form-control.is-invalid {
+    border-color: #dc3545 !important;
+    background-image: none !important;
+}
+
+#modal-form .help-block.with-errors {
+    color: #dc3545 !important;
+    font-size: 12px !important;
+    margin-top: 5px !important;
+}
+
+/* MODAL HEADER STYLING */
+#modal-form .modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border-bottom: none !important;
+}
+
+#modal-form .modal-title {
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+#modal-form .modal-header .close {
+    color: white !important;
+    opacity: 0.8 !important;
+    text-shadow: none !important;
+}
+
+#modal-form .modal-header .close:hover {
+    opacity: 1 !important;
+    color: white !important;
+}
+
+/* RESPONSIVE FIXES */
+@media (max-width: 768px) {
+    #modal-form select[name="deskripsi"],
+    #modal-form .form-control {
+        font-size: 16px !important; /* Prevent zoom on iOS */
+        height: 44px !important; /* Touch-friendly */
+    }
+    
+    #modal-form .modal-footer .btn {
+        width: 100% !important;
+        margin: 5px 0 !important;
+    }
+}
+
+/* OVERRIDE CONFLICTING STYLES */
+.modal-form select,
+.modal select.form-control,
+#modal-form select.form-control {
+    background-image: none !important;
+    -webkit-appearance: menulist !important;
+    -moz-appearance: menulist !important;
+    appearance: menulist !important;
+}
+
+/* Fix untuk AdminLTE atau Bootstrap conflicts */
+.select2-container,
+.bootstrap-select {
+    display: none !important;
+}
+
+/* Pastikan select tetap native */
+#modal-form select[name="deskripsi"] {
+    -webkit-appearance: menulist !important;
+    -moz-appearance: menulist !important;
+    appearance: menulist !important;
+    background: white !important;
+    background-image: none !important;
+}

@@ -1,0 +1,294 @@
+/* Page Title Styles - Modern and Identifiable */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Content Header Enhancement - Updated with reference colors */
+.content-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    padding: 25px 20px !important;
+    margin: -15px -15px 20px -15px !important;
+    border-radius: 0 0 15px 15px !important;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.content-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') !important;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.content-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent) !important;
+}
+
+.content-header h1 {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 28px !important;
+    margin: 0 0 10px 0 !important;
+    color: white !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.content-header h1 .page-icon {
+    margin-right: 12px !important;
+    font-size: 24px !important;
+    opacity: 0.9 !important;
+}
+
+/* Breadcrumb Enhancement - Updated with reference colors */
+.content-header .breadcrumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border-radius: 25px !important;
+    padding: 8px 20px !important;
+    margin: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(10px) !important;
+    position: relative !important;
+    z-index: 1 !important;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2) !important;
+}
+
+.content-header .breadcrumb > li {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 13px !important;
+}
+
+.content-header .breadcrumb > li + li:before {
+    content: "›" !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-weight: 600 !important;
+    padding: 0 8px !important;
+}
+
+.content-header .breadcrumb > li > a {
+    color: rgba(255, 255, 255, 0.8) !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.content-header .breadcrumb > li > a:hover {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.content-header .breadcrumb > .active {
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+/* Page Title with Icon Mapping */
+.page-title-dashboard::before { content: "📊"; }
+.page-title-kategori::before { content: "📦"; }
+.page-title-produk::before { content: "🛍️"; }
+.page-title-member::before { content: "👥"; }
+.page-title-supplier::before { content: "🚚"; }
+.page-title-pembelian::before { content: "📥"; }
+.page-title-penjualan::before { content: "📤"; }
+.page-title-pengeluaran::before { content: "💰"; }
+.page-title-laporan::before { content: "📋"; }
+.page-title-user::before { content: "👤"; }
+.page-title-setting::before { content: "⚙️"; }
+.page-title-jasa::before { content: "🔧"; }
+.page-title-simpanan::before { content: "🏦"; }
+.page-title-pinjaman::before { content: "💳"; }
+.page-title-pengambilan::before { content: "✋"; }
+
+.page-title-dashboard::before,
+.page-title-kategori::before,
+.page-title-produk::before,
+.page-title-member::before,
+.page-title-supplier::before,
+.page-title-pembelian::before,
+.page-title-penjualan::before,
+.page-title-pengeluaran::before,
+.page-title-laporan::before,
+.page-title-user::before,
+.page-title-setting::before,
+.page-title-jasa::before,
+.page-title-simpanan::before,
+.page-title-pinjaman::before,
+.page-title-pengambilan::before {
+    margin-right: 12px !important;
+    font-size: 24px !important;
+    opacity: 0.9 !important;
+}
+
+/* Page Identifier Badge - Updated with reference colors */
+.page-identifier {
+    position: absolute !important;
+    top: 15px !important;
+    right: 20px !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    padding: 8px 15px !important;
+    border-radius: 20px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    z-index: 2 !important;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3) !important;
+    transition: all 0.2s ease !important;
+}
+
+.page-identifier:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4) !important;
+}
+
+/* Content Section Enhancement */
+.content {
+    position: relative !important;
+}
+
+/* Box Header Enhancement for Consistency */
+.box .box-header.with-border {
+    border-bottom: 1px solid rgba(102, 126, 234, 0.1) !important;
+}
+
+.box .box-header h3.box-title {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 600 !important;
+    color: #333 !important;
+}
+
+/* Responsive Design - Updated */
+@media (max-width: 768px) {
+    .content-header {
+        margin: -15px -15px 15px -15px !important;
+        padding: 20px 15px !important;
+        border-radius: 0 0 10px 10px !important;
+    }
+    
+    .content-header h1 {
+        font-size: 22px !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .content-header .breadcrumb {
+        padding: 6px 15px !important;
+        font-size: 12px !important;
+        margin-top: 10px !important;
+    }
+    
+    .page-identifier {
+        position: absolute !important;
+        top: 10px !important;
+        right: 15px !important;
+        padding: 6px 12px !important;
+        font-size: 10px !important;
+        border-radius: 15px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-header h1 {
+        font-size: 20px !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .content-header h1::before {
+        font-size: 18px !important;
+        margin-right: 8px !important;
+    }
+    
+    .page-identifier {
+        position: static !important;
+        display: inline-block !important;
+        margin-top: 8px !important;
+        margin-right: 0 !important;
+        padding: 5px 10px !important;
+        font-size: 9px !important;
+        border-radius: 12px !important;
+    }
+    
+    .content-header .breadcrumb {
+        display: none !important;
+    }
+}
+
+/* Animation for Page Load */
+.content-header {
+    animation: slideInDown 0.5s ease-out;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .content-header {
+        background: #667eea !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    .page-identifier {
+        display: none !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .content-header {
+        background: #000 !important;
+        color: #fff !important;
+        border: 2px solid #fff !important;
+    }
+    
+    .content-header .breadcrumb {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border: 1px solid #fff !important;
+    }
+}
+
+/* Dark Mode Support (if implemented) */
+@media (prefers-color-scheme: dark) {
+    .content-header {
+        background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%) !important;
+    }
+}
+
+/* Focus States for Accessibility */
+.content-header .breadcrumb > li > a:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.8) !important;
+    outline-offset: 2px !important;
+    border-radius: 3px !important;
+}
+
+/* Custom Page Titles for Specific Actions */
+.page-title-create::after { content: " - Tambah Data"; opacity: 0.8; font-weight: 400; }
+.page-title-edit::after { content: " - Edit Data"; opacity: 0.8; font-weight: 400; }
+.page-title-show::after { content: " - Detail Data"; opacity: 0.8; font-weight: 400; }
+.page-title-report::after { content: " - Laporan"; opacity: 0.8; font-weight: 400; }

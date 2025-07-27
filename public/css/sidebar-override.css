@@ -1,0 +1,212 @@
+/* Override AdminLTE default styles for better integration */
+
+/* Hide desktop toggle on mobile, show mobile toggle */
+@media (max-width: 768px) {
+    .desktop-toggle {
+        display: none !important;
+    }
+    
+    .mobile-toggle {
+        display: block !important;
+    }
+}
+
+/* Show desktop toggle only on desktop, hide mobile toggle */
+@media (min-width: 769px) {
+    .mobile-toggle {
+        display: none !important;
+    }
+    
+    .desktop-toggle {
+        display: block !important;
+    }
+}
+
+/* Fix content wrapper margin untuk desktop dan mobile - kembalikan ke sebelumnya */
+@media (min-width: 769px) {
+    .content-wrapper {
+        margin-left: 250px !important;
+    }
+    
+    .main-header .navbar {
+        margin-left: 250px !important;
+    }
+    
+    /* Sidebar collapse state */
+    .sidebar-collapse .content-wrapper {
+        margin-left: 50px !important;
+    }
+    
+    .sidebar-collapse .main-header .navbar {
+        margin-left: 50px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        margin-left: 0 !important;
+    }
+    
+    .main-header .navbar {
+        margin-left: 0 !important;
+    }
+}
+
+/* Reset AdminLTE sidebar styles */
+.skin-purple-light .main-sidebar,
+.skin-purple .main-sidebar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Override AdminLTE user panel */
+.skin-purple-light .user-panel > .info,
+.skin-purple .user-panel > .info {
+    color: white !important;
+}
+
+.skin-purple-light .user-panel > .info > p,
+.skin-purple .user-panel > .info > p {
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+.skin-purple-light .user-panel > .info > a,
+.skin-purple .user-panel > .info > a {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Override AdminLTE menu styles */
+.skin-purple-light .sidebar-menu > li.header,
+.skin-purple .sidebar-menu > li.header {
+    color: rgba(255, 255, 255, 0.7) !important;
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.skin-purple-light .sidebar-menu > li > a,
+.skin-purple .sidebar-menu > li > a {
+    color: rgba(255, 255, 255, 0.9) !important;
+    border-left: none !important;
+    background: transparent !important;
+}
+
+.skin-purple-light .sidebar-menu > li:hover > a,
+.skin-purple .sidebar-menu > li:hover > a {
+    color: white !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.skin-purple-light .sidebar-menu > li.active > a,
+.skin-purple .sidebar-menu > li.active > a {
+    color: white !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-left: 4px solid white !important;
+    font-weight: 600 !important;
+}
+
+/* Fix content wrapper margin for responsive */
+@media (min-width: 769px) {
+    .content-wrapper {
+        margin-left: 250px !important;
+    }
+    
+    .main-header .navbar {
+        margin-left: 250px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        margin-left: 0 !important;
+    }
+    
+    .main-header .navbar {
+        margin-left: 0 !important;
+    }
+}
+
+/* Fix for AdminLTE body classes */
+.sidebar-mini.sidebar-collapse .main-sidebar {
+    width: 250px !important;
+    transform: translateX(-100%) !important;
+}
+
+@media (min-width: 769px) {
+    .sidebar-mini.sidebar-collapse .main-sidebar {
+        width: 50px !important;
+        transform: translateX(0) !important;
+    }
+    
+    .sidebar-mini.sidebar-collapse .content-wrapper {
+        margin-left: 50px !important;
+    }
+    
+    .sidebar-mini.sidebar-collapse .main-header .navbar {
+        margin-left: 50px !important;
+    }
+}
+
+/* Ensure proper z-index layering */
+.main-header {
+    z-index: 1030 !important;
+}
+
+.main-sidebar {
+    z-index: 1000 !important;
+}
+
+.sidebar-overlay {
+    z-index: 999 !important;
+}
+
+.mobile-toggle {
+    z-index: 1001 !important;
+}
+
+/* Fix for pull-left classes */
+.user-panel .pull-left {
+    float: left !important;
+}
+
+.user-panel:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Additional mobile improvements */
+@media (max-width: 480px) {
+    .mobile-toggle {
+        top: 10px;
+        left: 10px;
+        padding: 8px 10px;
+        font-size: 16px;
+    }
+    
+    .main-sidebar {
+        width: 100vw !important;
+    }
+}
+
+/* Smooth transitions */
+.main-sidebar,
+.content-wrapper,
+.main-header .navbar {
+    transition: all 0.3s ease !important;
+}
+
+/* Fix for tree menu if exists */
+.sidebar-menu .treeview-menu {
+    background: rgba(0, 0, 0, 0.2) !important;
+}
+
+.sidebar-menu .treeview-menu > li > a {
+    color: rgba(255, 255, 255, 0.8) !important;
+    padding-left: 35px !important;
+}
+
+.sidebar-menu .treeview-menu > li:hover > a {
+    color: white !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+}

@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Dashboard Modern - Aplikasi Kasir Koperasi</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/3.4.1/css/bootstrap.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/sidebar-responsive.css">
+    <link rel="stylesheet" href="css/sidebar-override.css">
+    <link rel="stylesheet" href="css/sidebar-animations.css">
+    <link rel="stylesheet" href="css/navbar-responsive.css">
+    <link rel="stylesheet" href="css/dashboard-modern.css">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+        }
+        
+        .demo-content {
+            margin-left: 250px;
+            margin-top: 50px;
+            transition: margin-left 0.2s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-content {
+                margin-left: 0;
+                margin-top: 50px;
+            }
+        }
+        
+        .sidebar-collapse .demo-content {
+            margin-left: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar-collapse .demo-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body class="hold-transition skin-purple-light sidebar-mini">
+    <!-- Header/Navbar -->
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="#" class="logo">
+            <span class="logo-mini">AK</span>
+            <span class="logo-lg"><b>Aplikasi Kasir Koperasi</b></span>
+        </a>
+        
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle desktop-toggle" data-toggle="push-menu" role="button" onclick="toggleSidebarCollapse()">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account Menu -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span>Demo User</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="img/user.jpg" class="img-circle" alt="User Image" style="width: 90px; height: 90px; object-fit: cover;">
+                                <p>
+                                    Demo User - demo@example.com
+                                </p>
+                            </li>
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Profil</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-default btn-flat">Keluar</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Toggle Button -->
+    <button class="mobile-toggle" id="mobileToggle">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="main-sidebar" id="mainSidebar">
+        <!-- Close button for mobile -->
+        <button class="sidebar-close" id="sidebarClose">
+            <i class="fa fa-times"></i>
+        </button>
+        
+        <section class="sidebar">
+            <!-- User panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="img/user.jpg" class="img-circle img-profil" alt="User Image" style="width: 45px; height: 45px; object-fit: cover;">
+                </div>
+                <div class="pull-left info">
+                    <p>Demo User</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+
+            <!-- Sidebar menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="active">
+                    <a href="#dashboard">
+                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+                
+                <li class="header">MASTER</li>
+                <li>
+                    <a href="#kategori">
+                        <i class="fa fa-cube"></i> <span>Kategori</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#produk">
+                        <i class="fa fa-cubes"></i> <span>Produk</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#member">
+                        <i class="fa fa-id-card"></i> <span>Member</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#supplier">
+                        <i class="fa fa-truck"></i> <span>Supplier</span>
+                    </a>
+                </li>
+                
+                <li class="header">TRANSAKSI</li>
+                <li>
+                    <a href="#pengeluaran">
+                        <i class="fa fa-money"></i> <span>Pengeluaran</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#pembelian">
+                        <i class="fa fa-download"></i> <span>Pembelian</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#penjualan">
+                        <i class="fa fa-upload"></i> <span>Penjualan</span>
+                    </a>
+                </li>
+                
+                <li class="header">SYSTEM</li>
+                <li>
+                    <a href="#user">
+                        <i class="fa fa-users"></i> <span>User</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#setting">
+                        <i class="fa fa-cogs"></i> <span>Pengaturan</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="demo-content">
+        <div class="dashboard-container">
+            <!-- Stats Cards Row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="modern-stats-card variant-blue">
+                        <div class="stats-icon">
+                            <i class="fa fa-cube"></i>
+                        </div>
+                        <div class="stats-number">12</div>
+                        <div class="stats-label">Total Kategori</div>
+                        <a href="#" class="stats-footer">
+                            Lihat Detail <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="modern-stats-card variant-green">
+                        <div class="stats-icon">
+                            <i class="fa fa-cubes"></i>
+                        </div>
+                        <div class="stats-number">245</div>
+                        <div class="stats-label">Total Produk</div>
+                        <a href="#" class="stats-footer">
+                            Lihat Detail <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="modern-stats-card variant-orange">
+                        <div class="stats-icon">
+                            <i class="fa fa-id-card"></i>
+                        </div>
+                        <div class="stats-number">89</div>
+                        <div class="stats-label">Total Member</div>
+                        <a href="#" class="stats-footer">
+                            Lihat Detail <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                    <div class="modern-stats-card variant-red">
+                        <div class="stats-icon">
+                            <i class="fa fa-truck"></i>
+                        </div>
+                        <div class="stats-number">15</div>
+                        <div class="stats-label">Total Supplier</div>
+                        <a href="#" class="stats-footer">
+                            Lihat Detail <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Stats -->
+            <div class="monthly-stats">
+                <div class="stat-item">
+                    <div class="stat-value positive">Rp 15,750,000</div>
+                    <div class="stat-label">Penjualan Bulan Ini</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value negative">Rp 8,500,000</div>
+                    <div class="stat-label">Pembelian Bulan Ini</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value negative">Rp 1,200,000</div>
+                    <div class="stat-label">Pengeluaran Bulan Ini</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value positive">Rp 6,050,000</div>
+                    <div class="stat-label">Profit Bulan Ini</div>
+                </div>
+            </div>
+
+            <!-- Main Content Row -->
+            <div class="row">
+                <!-- Chart Column -->
+                <div class="col-lg-8">
+                    <div class="chart-container">
+                        <div class="chart-title">
+                            📈 Grafik Pendapatan Januari 2025
+                        </div>
+                        <canvas id="salesChart" style="height: 300px;"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Recent Transactions -->
+                <div class="col-lg-4">
+                    <div class="modern-content-card">
+                        <div class="card-header">
+                            <i class="fa fa-clock-o"></i> Transaksi Terbaru
+                        </div>
+                        <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                            <div class="transaction-item">
+                                <div class="transaction-icon sale">
+                                    <i class="fa fa-arrow-up"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <div class="transaction-id">Penjualan #001</div>
+                                    <div class="transaction-info">John Doe • 5 item</div>
+                                </div>
+                                <div class="transaction-amount">
+                                    <div class="transaction-total">Rp 125,000</div>
+                                    <div class="transaction-time">26/01/2025 14:30</div>
+                                </div>
+                            </div>
+                            
+                            <div class="transaction-item">
+                                <div class="transaction-icon sale">
+                                    <i class="fa fa-arrow-up"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <div class="transaction-id">Penjualan #002</div>
+                                    <div class="transaction-info">Jane Smith • 3 item</div>
+                                </div>
+                                <div class="transaction-amount">
+                                    <div class="transaction-total">Rp 85,000</div>
+                                    <div class="transaction-time">26/01/2025 13:15</div>
+                                </div>
+                            </div>
+                            
+                            <div class="transaction-item">
+                                <div class="transaction-icon sale">
+                                    <i class="fa fa-arrow-up"></i>
+                                </div>
+                                <div class="transaction-details">
+                                    <div class="transaction-id">Penjualan #003</div>
+                                    <div class="transaction-info">Bob Wilson • 2 item</div>
+                                </div>
+                                <div class="transaction-amount">
+                                    <div class="transaction-total">Rp 65,000</div>
+                                    <div class="transaction-time">26/01/2025 12:45</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Products Row -->
+            <div class="row">
+                <!-- Top 5 Barang Terjual -->
+                <div class="col-lg-6">
+                    <div class="modern-content-card">
+                        <div class="card-header">
+                            <i class="fa fa-trophy"></i> Top 5 Barang Terjual
+                        </div>
+                        <div class="card-body">
+                            <table class="top-products-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Produk</th>
+                                        <th>Terjual</th>
+                                        <th>Pendapatan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="rank-badge rank-1">1</span></td>
+                                        <td>
+                                            <strong>Beras Premium 5kg</strong><br>
+                                            <small class="text-muted">Rp 65,000/unit</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white;">
+                                                125 unit
+                                            </span>
+                                        </td>
+                                        <td><strong>Rp 8,125,000</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rank-badge rank-2">2</span></td>
+                                        <td>
+                                            <strong>Minyak Goreng 2L</strong><br>
+                                            <small class="text-muted">Rp 28,000/unit</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white;">
+                                                98 unit
+                                            </span>
+                                        </td>
+                                        <td><strong>Rp 2,744,000</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rank-badge rank-3">3</span></td>
+                                        <td>
+                                            <strong>Gula Pasir 1kg</strong><br>
+                                            <small class="text-muted">Rp 15,000/unit</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white;">
+                                                87 unit
+                                            </span>
+                                        </td>
+                                        <td><strong>Rp 1,305,000</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rank-badge rank-4">4</span></td>
+                                        <td>
+                                            <strong>Telur Ayam 1kg</strong><br>
+                                            <small class="text-muted">Rp 25,000/unit</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white;">
+                                                76 unit
+                                            </span>
+                                        </td>
+                                        <td><strong>Rp 1,900,000</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rank-badge rank-5">5</span></td>
+                                        <td>
+                                            <strong>Susu UHT 1L</strong><br>
+                                            <small class="text-muted">Rp 18,000/unit</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white;">
+                                                65 unit
+                                            </span>
+                                        </td>
+                                        <td><strong>Rp 1,170,000</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top 5 Barang Pembelian -->
+                <div class="col-lg-6">
+                    <div class="modern-content-card">
+                        <div class="card-header">
+                            <i class="fa fa-shopping-bag"></i> Top 5 Barang Pembelian
+                        </div>
+                        <div class="card-body">
+                            <table class="top-products-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Produk</th>
+                                        <th>Dibeli</th>
+                                        <th>Pengeluaran</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="rank-badge rank-1">1</span></td>
+                                        <td>
+                                            <strong>Beras Premium 5kg</strong><br>
+                                            <small class="text-muted">Rp 58,000/unit</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge" style="background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%); color: white;">
+                                                150 unit
+                                            </span>
+                                        </td>
+                                        <td><strong>Rp 8,700,000</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rank-badge rank-2">2</span></td>
+                                        <td>
+                                            <strong>Minyak Goreng 2L</strong><br>
+                                            <small class="text-muted">Rp 25,000/unit</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge" style="background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%); color: white;">
+                                                120 unit
+                                            </span>
+                                        </td>
+                                        <td><strong>Rp 3,000,000</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rank-badge rank-3">3</span></td>
+                                        <td>
+                                            <strong>Gula Pasir 1kg</strong><br>
+                                            <small class="text-muted">Rp 13,000/unit</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge" style="background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%); color: white;">
+                                                100 unit
+                                            </span>
+                                        </td>
+                                        <td><strong>Rp 1,300,000</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rank-badge rank-4">4</span></td>
+                                        <td>
+                                            <strong>Telur Ayam 1kg</strong><br>
+                                            <small class="text-muted">Rp 22,000/unit</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge" style="background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%); color: white;">
+                                                90 unit
+                                            </span>
+                                        </td>
+                                        <td><strong>Rp 1,980,000</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="rank-badge rank-5">5</span></td>
+                                        <td>
+                                            <strong>Susu UHT 1L</strong><br>
+                                            <small class="text-muted">Rp 15,000/unit</small>
+                                        </td>
+                                        <td>
+                                            <span class="badge" style="background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%); color: white;">
+                                                80 unit
+                                            </span>
+                                        </td>
+                                        <td><strong>Rp 1,200,000</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="js/sidebar-responsive.js"></script>
+    
+    <script>
+        // Desktop sidebar collapse functionality
+        function toggleSidebarCollapse() {
+            document.body.classList.toggle('sidebar-collapse');
+        }
+        
+        // Chart Demo
+        $(function() {
+            var ctx = document.getElementById('salesChart').getContext('2d');
+            var salesChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26],
+                    datasets: [{
+                        label: 'Pendapatan',
+                        data: [150000, 200000, 180000, 220000, 250000, 300000, 280000, 320000, 290000, 350000, 380000, 400000, 420000, 390000, 450000, 480000, 500000, 520000, 490000, 550000, 580000, 600000, 620000, 590000, 650000, 680000],
+                        borderColor: 'rgba(102, 126, 234, 1)',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#667eea',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return 'Rp ' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Pendapatan: Rp ' + context.parsed.y.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Add loading animation
+            $('.modern-stats-card').each(function(index) {
+                $(this).css('animation-delay', (index * 0.1) + 's');
+                $(this).addClass('animate-in');
+            });
+        });
+
+        // Add CSS animation for cards
+        $('<style>')
+            .prop('type', 'text/css')
+            .html(`
+                .animate-in {
+                    animation: slideInUp 0.6s ease-out forwards;
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                
+                @keyframes slideInUp {
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `)
+            .appendTo('head');
+
+        // Demo specific code
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers for demo links
+            const demoLinks = document.querySelectorAll('.sidebar-menu a[href^="#"]');
+            demoLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all items
+                    document.querySelectorAll('.sidebar-menu li').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked item
+                    this.parentElement.classList.add('active');
+                    
+                    // Show notification
+                    showNotification(`Navigasi ke ${this.querySelector('span').textContent}`);
+                });
+            });
+            
+            // Show welcome notification
+            setTimeout(() => {
+                showNotification('Dashboard modern telah berhasil diupdate dengan design yang konsisten!');
+            }, 1000);
+        });
+        
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 70px;
+                right: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-family: Poppins, sans-serif;
+                font-size: 14px;
+                max-width: 300px;
+                animation: slideInRight 0.2s ease-out;
+            `;
+            notification.textContent = message;
+            
+            // Add animation keyframes
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideInRight {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOutRight {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.2s ease-out forwards';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 200);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

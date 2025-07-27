@@ -62,13 +62,10 @@
                             class="fa fa-plus-circle"></i> Backup Produk</button> --}}
                     @if (auth()->user()->level == 6)
                     @else
-                                <form action={{ route('produk.backup_data') }} method="POST" class="btn" style="margin-left: -10px">
-                                    @csrf
-                                    <button type="submit" class="btn btn-warning btn-flat {{ $buttonClass }}"{{ $buttonAttributes }}
-                                        onclick="return confirm('Anda yakin Backup Data {{ date('F Y') }}?')">
-                                        <i class="fa fa-plus-circle"></i> Backup Produk {{ date('F Y') }}
-                                    </button>
-                                </form>
+                                <button type="button" class="btn btn-warning btn-flat {{ $buttonClass }}"{{ $buttonAttributes }}
+                                    onclick="backupData('{{ route('produk.backup_data') }}')">
+                                    <i class="fa fa-plus-circle"></i> Backup Produk {{ date('F Y') }}
+                                </button>
                     @endif
                 </div>
                 <div class="box-body table-responsive">
@@ -186,11 +183,16 @@
                     $.post($('#modal-form form').attr('action'), $('#modal-form form').serialize())
                         .done((response) => {
                             $('#modal-form').modal('hide');
+                            showCreateSuccess('Data berhasil disimpan!');
                             table.ajax.reload();
                         })
                         .fail((errors) => {
-                            alert('Tidak dapat menyimpan data');
-                            console.log(errors);
+                            console.log('Error details:', errors);
+                            if (errors.responseJSON && errors.responseJSON.message) {
+                                alert('Error: ' + errors.responseJSON.message);
+                            } else {
+                                alert('Terjadi kesalahan saat menyimpan data. Status: ' + errors.status);
+                            }
                         });
                 }
             });
@@ -261,19 +263,36 @@
         }
 
         function deleteData(url) {
-            if (confirm('Yakin ingin menghapus data terpilih?')) {
-                $.post(url, {
-                        '_token': $('[name=csrf-token]').attr('content'),
-                        '_method': 'delete'
-                    })
-                    .done((response) => {
-                        table.ajax.reload();
-                    })
-                    .fail((errors) => {
-                        alert('Tidak dapat menghapus data');
-                        return;
-                    });
-            }
+            Swal.fire({
+                title: 'Hapus Data',
+                text: 'Yakin ingin menghapus data ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                reverseButtons: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post(url, {
+                            '_token': $('[name=csrf-token]').attr('content'),
+                            '_method': 'delete'
+                        })
+                        .done((response) => {
+                            showDeleteSuccess('Data berhasil dihapus!');
+                            table.ajax.reload();
+                        })
+                        .fail((errors) => {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Tidak dapat menghapus data',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        });
+                }
+            });
         }
 
         function deleteSelected(url) {
@@ -332,5 +351,87 @@
         function openProduk(awal, akhir) {
             window.open('/produk/stok/' + awal + '/' + akhir, 'Laporan Produk', 'width=900,height=675');
         }
+
+        function backupData(url) {
+            Swal.fire({
+                title: 'Backup Data Produk',
+                text: 'Yakin ingin backup data produk {{ date('F Y') }}?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya',
+                cancelButtonText: 'Tidak',
+                reverseButtons: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = url;
+                    
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                    
+                    form.appendChild(csrfInput);
+                    document.body.appendChild(form);
+                    form.submit();
+                    
+                    showDeleteSuccess('Backup data produk berhasil dimulai!');
+                }
+            });
+        }
     </script>
+    
+    <style>
+        @keyframes swal2-success-icon-animation {
+            0% {
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2) rotate(180deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1) rotate(360deg);
+                opacity: 1;
+            }
+        }
+        
+        .swal2-success .swal2-success-ring {
+            animation: swal2-success-ring-animation 0.75s ease-in-out;
+        }
+        
+        @keyframes swal2-success-ring-animation {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            40% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .swal2-success .swal2-success-fix {
+            animation: swal2-success-fix-animation 0.75s ease-in-out 0.25s both;
+        }
+        
+        @keyframes swal2-success-fix-animation {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
 @endpush

@@ -1,0 +1,450 @@
+/* Toasty Modern CSS - Stable Layout dengan theme #667eea → #764ba2 */
+
+/* Container untuk toast yang stabil */
+.toasty-container {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+/* Positioning containers */
+.toasty-container.top-right {
+    top: 20px;
+    right: 20px;
+    align-items: flex-end;
+}
+
+.toasty-container.top-left {
+    top: 20px;
+    left: 20px;
+    align-items: flex-start;
+}
+
+.toasty-container.top-center {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+}
+
+.toasty-container.bottom-right {
+    bottom: 20px;
+    right: 20px;
+    align-items: flex-end;
+    flex-direction: column-reverse;
+}
+
+.toasty-container.bottom-left {
+    bottom: 20px;
+    left: 20px;
+    align-items: flex-start;
+    flex-direction: column-reverse;
+}
+
+.toasty-container.bottom-center {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    flex-direction: column-reverse;
+}
+
+/* Base toast styling */
+.toasty {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    min-width: 320px;
+    max-width: 480px;
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border: none;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* Toast types */
+.toasty.success {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+}
+
+.toasty.error {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+    color: white;
+}
+
+.toasty.warning {
+    background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+    color: white;
+}
+
+.toasty.info {
+    background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+    color: white;
+}
+
+.toasty.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.toasty.loading {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* Toast icon */
+.toasty-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Toast content */
+.toasty-content {
+    flex: 1;
+    word-wrap: break-word;
+    line-height: 1.4;
+}
+
+/* Toast close button */
+.toasty-close {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-left: 12px;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toasty-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Progress bar */
+.toasty-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 0 0 12px 12px;
+    transform-origin: left;
+    animation: toasty-progress linear;
+}
+
+@keyframes toasty-progress {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+}
+
+/* Loading spinner */
+.toasty-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: toasty-spin 1s linear infinite;
+}
+
+@keyframes toasty-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Animation classes */
+.toasty.entering {
+    animation: toasty-slide-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.toasty.exiting {
+    animation: toasty-slide-out 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Slide animations for different positions */
+@keyframes toasty-slide-in {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toasty-slide-out {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Left side animations */
+.toasty-container.top-left .toasty.entering,
+.toasty-container.bottom-left .toasty.entering {
+    animation: toasty-slide-in-left 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.toasty-container.top-left .toasty.exiting,
+.toasty-container.bottom-left .toasty.exiting {
+    animation: toasty-slide-out-left 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes toasty-slide-in-left {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toasty-slide-out-left {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+/* Center animations */
+.toasty-container.top-center .toasty.entering,
+.toasty-container.bottom-center .toasty.entering {
+    animation: toasty-slide-in-center 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.toasty-container.top-center .toasty.exiting,
+.toasty-container.bottom-center .toasty.exiting {
+    animation: toasty-slide-out-center 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes toasty-slide-in-center {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toasty-slide-out-center {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+/* Hover effects */
+.toasty:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Action button styling */
+.toasty-action {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 12px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.toasty-action:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Progress container for custom progress */
+.toasty-progress-container {
+    margin-top: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    height: 6px;
+    overflow: hidden;
+}
+
+.toasty-progress-bar {
+    height: 100%;
+    background: white;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .toasty-container {
+        left: 10px !important;
+        right: 10px !important;
+        top: 10px !important;
+        bottom: 10px !important;
+        transform: none !important;
+        align-items: stretch !important;
+    }
+    
+    .toasty {
+        min-width: auto;
+        max-width: none;
+        width: 100%;
+        font-size: 13px;
+        padding: 14px 16px;
+    }
+    
+    .toasty-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 14px;
+        margin-right: 10px;
+    }
+    
+    .toasty-close {
+        width: 18px;
+        height: 18px;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+    
+    .toasty-action {
+        padding: 4px 10px;
+        font-size: 11px;
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .toasty-container {
+        left: 5px !important;
+        right: 5px !important;
+        top: 5px !important;
+        bottom: 5px !important;
+    }
+    
+    .toasty {
+        font-size: 12px;
+        padding: 12px 14px;
+    }
+    
+    .toasty-icon {
+        width: 16px;
+        height: 16px;
+        font-size: 12px;
+        margin-right: 8px;
+    }
+    
+    .toasty-close {
+        width: 16px;
+        height: 16px;
+        font-size: 12px;
+        margin-left: 8px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .toasty {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .toasty {
+        border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+    
+    .toasty-close,
+    .toasty-action {
+        border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .toasty {
+        transition: none;
+        animation: none !important;
+    }
+    
+    .toasty:hover {
+        transform: none;
+    }
+    
+    .toasty-spinner {
+        animation: none;
+    }
+    
+    .toasty-progress {
+        animation: none;
+    }
+}
+
+/* Layout stability fixes */
+.toasty-container * {
+    box-sizing: border-box;
+}
+
+.toasty {
+    will-change: transform, opacity;
+    contain: layout style paint;
+}
+
+/* Prevent layout shift */
+.toasty-container::before {
+    content: '';
+    display: block;
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}

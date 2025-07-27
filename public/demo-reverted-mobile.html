@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Mobile Reverted - Navbar & Sidebar</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap (for dropdown functionality) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/3.4.1/css/bootstrap.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/sidebar-responsive.css">
+    <link rel="stylesheet" href="css/sidebar-override.css">
+    <link rel="stylesheet" href="css/sidebar-animations.css">
+    <link rel="stylesheet" href="css/navbar-responsive.css">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f4f4f4;
+        }
+        
+        .demo-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: margin-left 0.2s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-content {
+                margin-left: 0;
+            }
+        }
+        
+        .demo-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .revert-status {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .change-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+        
+        .change-item .icon {
+            margin-right: 15px;
+            font-size: 20px;
+            color: #FFC107;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-reverted {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-kept {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .sidebar-collapse .demo-content {
+            margin-left: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar-collapse .demo-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body class="hold-transition skin-purple-light sidebar-mini">
+    <!-- Header/Navbar -->
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="#" class="logo">
+            <span class="logo-mini">AK</span>
+            <span class="logo-lg"><b>Aplikasi Kasir Koperasi</b></span>
+        </a>
+        
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle desktop-toggle" data-toggle="push-menu" role="button" onclick="toggleSidebarCollapse()">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- User Account Menu -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span>Demo User</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="img/user.jpg" class="img-circle" alt="User Image" style="width: 90px; height: 90px; object-fit: cover;">
+                                <p>
+                                    Demo User - demo@example.com
+                                </p>
+                            </li>
+
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Profil</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-default btn-flat">Keluar</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Toggle Button -->
+    <button class="mobile-toggle" id="mobileToggle">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="main-sidebar" id="mainSidebar">
+        <!-- Close button for mobile -->
+        <button class="sidebar-close" id="sidebarClose">
+            <i class="fa fa-times"></i>
+        </button>
+        
+        <section class="sidebar">
+            <!-- User panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <img src="img/user.jpg" class="img-circle img-profil" alt="User Image" style="width: 45px; height: 45px; object-fit: cover;">
+                </div>
+                <div class="pull-left info">
+                    <p>Demo User</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+
+            <!-- Sidebar menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="active">
+                    <a href="#dashboard">
+                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+                
+                <li class="header">MASTER</li>
+                <li>
+                    <a href="#kategori">
+                        <i class="fa fa-cube"></i> <span>Kategori</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#produk">
+                        <i class="fa fa-cubes"></i> <span>Produk</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#member">
+                        <i class="fa fa-id-card"></i> <span>Member</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#supplier">
+                        <i class="fa fa-truck"></i> <span>Supplier</span>
+                    </a>
+                </li>
+                
+                <li class="header">TRANSAKSI</li>
+                <li>
+                    <a href="#pengeluaran">
+                        <i class="fa fa-money"></i> <span>Pengeluaran</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#pembelian">
+                        <i class="fa fa-download"></i> <span>Pembelian</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#penjualan">
+                        <i class="fa fa-upload"></i> <span>Penjualan</span>
+                    </a>
+                </li>
+                
+                <li class="header">SYSTEM</li>
+                <li>
+                    <a href="#user">
+                        <i class="fa fa-users"></i> <span>User</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#setting">
+                        <i class="fa fa-cogs"></i> <span>Pengaturan</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="demo-content">
+        <div class="revert-status">
+            <h2>🔄 Mobile Layout Dikembalikan ke Sebelumnya</h2>
+            <div class="change-item">
+                <div class="icon">🔄</div>
+                <div>
+                    <strong>Mobile Toggle Position</strong><br>
+                    Dikembalikan ke posisi 15px dari top dan left (seperti sebelumnya)
+                </div>
+            </div>
+            <div class="change-item">
+                <div class="icon">🔄</div>
+                <div>
+                    <strong>Mobile Header Layout</strong><br>
+                    Header kembali ke position relative (bukan fixed)
+                </div>
+            </div>
+            <div class="change-item">
+                <div class="icon">🔄</div>
+                <div>
+                    <strong>Content Wrapper Margin</strong><br>
+                    Margin-top dikembalikan ke default (tanpa 50px offset)
+                </div>
+            </div>
+            <div class="change-item">
+                <div class="icon">✅</div>
+                <div>
+                    <strong>Desktop Functionality</strong><br>
+                    Tetap dipertahankan: Logo collapse dan navbar margin fixes
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-card">
+            <h3>📊 Perbandingan Perubahan</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspek</th>
+                        <th>Setelah Fix</th>
+                        <th>Dikembalikan ke</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Mobile Toggle Position</strong></td>
+                        <td>top: 5px, left: 5px</td>
+                        <td>top: 15px, left: 15px</td>
+                        <td><span class="status-badge status-reverted">Reverted</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mobile Header</strong></td>
+                        <td>position: fixed</td>
+                        <td>position: relative</td>
+                        <td><span class="status-badge status-reverted">Reverted</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Content Margin Top</strong></td>
+                        <td>margin-top: 50px</td>
+                        <td>margin-top: default</td>
+                        <td><span class="status-badge status-reverted">Reverted</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mobile Toggle Size</strong></td>
+                        <td>40x40px</td>
+                        <td>auto size dengan padding</td>
+                        <td><span class="status-badge status-reverted">Reverted</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Desktop Logo Logic</strong></td>
+                        <td>Fixed collapse behavior</td>
+                        <td>Tetap fixed</td>
+                        <td><span class="status-badge status-kept">Kept</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Desktop Navbar Margin</strong></td>
+                        <td>Fixed white space</td>
+                        <td>Tetap fixed</td>
+                        <td><span class="status-badge status-kept">Kept</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mobile Toggle Function</strong></td>
+                        <td>Fixed dengan debug logging</td>
+                        <td>Tetap fixed</td>
+                        <td><span class="status-badge status-kept">Kept</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="demo-card">
+            <h3>📱 Yang Dikembalikan (Mobile)</h3>
+            <ul>
+                <li><strong>Toggle Position:</strong> Kembali ke 15px dari top dan left</li>
+                <li><strong>Header Layout:</strong> Position relative (bukan fixed)</li>
+                <li><strong>Content Spacing:</strong> Tanpa margin-top tambahan</li>
+                <li><strong>Toggle Size:</strong> Auto size dengan padding 10px</li>
+                <li><strong>Navbar Visibility:</strong> Navbar tetap terlihat di mobile</li>
+            </ul>
+        </div>
+
+        <div class="demo-card">
+            <h3>💻 Yang Dipertahankan (Desktop)</h3>
+            <ul>
+                <li><strong>Logo Collapse:</strong> "Aplikasi Kasir Koperasi" → "AK" saat collapsed</li>
+                <li><strong>Navbar Margin:</strong> Tidak ada white space di sebelah kiri</li>
+                <li><strong>Sidebar Function:</strong> Toggle berfungsi dengan benar</li>
+                <li><strong>Responsive Behavior:</strong> Smooth transition saat resize</li>
+            </ul>
+        </div>
+
+        <div class="demo-card">
+            <h3>🧪 Testing Mobile Layout</h3>
+            <p><strong>Mobile (≤768px):</strong></p>
+            <ol>
+                <li>Hamburger di posisi 15px dari kiri atas (seperti sebelumnya)</li>
+                <li>Header dengan position relative</li>
+                <li>Navbar tetap terlihat di mobile</li>
+                <li>Content tanpa margin-top tambahan</li>
+                <li>Sidebar function tetap bekerja</li>
+            </ol>
+            
+            <p><strong>Desktop (>768px):</strong></p>
+            <ol>
+                <li>Logo collapse berfungsi normal</li>
+                <li>Tidak ada white space di navbar</li>
+                <li>Margin menyesuaikan dengan sidebar state</li>
+                <li>Semua desktop functionality tetap bekerja</li>
+            </ol>
+        </div>
+
+        <div class="demo-card">
+            <h3>✅ Summary</h3>
+            <p><strong>Yang Berubah:</strong></p>
+            <ul>
+                <li>Mobile layout dikembalikan ke kondisi sebelumnya</li>
+                <li>Toggle position kembali ke 15px offset</li>
+                <li>Header layout lebih sederhana</li>
+            </ul>
+            
+            <p><strong>Yang Tetap:</strong></p>
+            <ul>
+                <li>Desktop fixes tetap dipertahankan</li>
+                <li>Mobile toggle functionality tetap bekerja</li>
+                <li>Konsistensi warna dan font tetap</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="js/sidebar-responsive.js"></script>
+    
+    <script>
+        // Desktop sidebar collapse functionality
+        function toggleSidebarCollapse() {
+            document.body.classList.toggle('sidebar-collapse');
+        }
+        
+        // Demo specific code
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Demo mobile reverted loaded');
+            
+            // Add click handlers for demo links
+            const demoLinks = document.querySelectorAll('.sidebar-menu a[href^="#"]');
+            demoLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all items
+                    document.querySelectorAll('.sidebar-menu li').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked item
+                    this.parentElement.classList.add('active');
+                    
+                    // Show notification
+                    showNotification(`Navigasi ke ${this.querySelector('span').textContent}`);
+                });
+            });
+            
+            // Show welcome notification
+            setTimeout(() => {
+                showNotification('Mobile layout telah dikembalikan ke kondisi sebelumnya. Desktop fixes tetap dipertahankan.');
+            }, 1000);
+        });
+        
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-family: Poppins, sans-serif;
+                font-size: 14px;
+                max-width: 300px;
+                animation: slideInRight 0.2s ease-out;
+            `;
+            notification.textContent = message;
+            
+            // Add animation keyframes
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideInRight {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOutRight {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.2s ease-out forwards';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 200);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

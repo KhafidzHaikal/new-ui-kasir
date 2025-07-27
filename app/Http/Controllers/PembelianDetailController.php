@@ -17,12 +17,12 @@ class PembelianDetailController extends Controller
         $id_pembelian = session('id_pembelian');
         if (auth()->user()->level == 4) {
             $produk = Produk::orderBy('nama_produk')->where('id_kategori', 4)->get();
-        } elseif (auth()->user()->level == 5) {
+        } elseif (auth()->user()->level == 5 || auth()->user()->level == 8) {
             $produk = Produk::orderBy('nama_produk')->where('id_kategori', 5)->get();
-        } elseif (auth()->user()->level == 8) {
-            $produk = Produk::orderBy('nama_produk')->where('id_kategori', 13)->get();
-        } else {
+        } elseif (auth()->user()->level == 1) {
             $produk = Produk::orderBy('nama_produk')->get();
+        } else {
+            $produk = Produk::orderBy('nama_produk')->where([['id_kategori', '!=', 4], ['id_kategori', '!=', 5]])->get();
         }
 
         $supplier = Supplier::find(session('id_supplier'));
@@ -75,7 +75,10 @@ class PembelianDetailController extends Controller
             ->of($data)
             ->addIndexColumn()
             ->rawColumns(['aksi', 'kode_produk', 'jumlah'])
-            ->make(true);
+            ->make(true)
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     public function store(Request $request)
@@ -108,9 +111,18 @@ class PembelianDetailController extends Controller
     public function destroy($id)
     {
         $detail = PembelianDetail::find($id);
-        $detail->delete();
-
-        return response(null, 204);
+        if ($detail) {
+            $detail->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Data berhasil dihapus'
+            ], 200);
+        }
+        
+        return response()->json([
+            'success' => false,
+            'message' => 'Data tidak ditemukan'
+        ], 404);
     }
 
     public function loadForm($diskon, $total)
@@ -128,11 +140,15 @@ class PembelianDetailController extends Controller
 
     public function search(Request $request)
     {
-        $kode_produk = $request->input('kode_produk');
+        $kode_produk = trim($request->input('kode_produk'));
+        
+        if (empty($kode_produk)) {
+            return response()->json(['error' => 'Kode produk tidak boleh kosong'], 400);
+        }
 
         $produk = DB::table('produk')->where('produk.kode_produk', '=', $kode_produk)->first();
         if (!$produk) {
-            return response()->json('Data gagal disimpan', 400);
+            return response()->json(['error' => 'Produk tidak ditemukan'], 400);
         }
 
         $detail = new PembelianDetail();
